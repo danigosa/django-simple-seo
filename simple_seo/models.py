@@ -1,7 +1,8 @@
 from .fields import TitleTagField
+from django.db import models
 
 
-class BaseMetadata(object):
+class BaseMetadata(models.Model):
     """
     Abstract Class
     """

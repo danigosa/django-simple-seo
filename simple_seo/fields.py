@@ -1,8 +1,22 @@
 from django.db import models
+from django.utils.six import with_metaclass
 from .tags import TitleTag
 
 
-class TitleTagField(models.CharField):
+class BaseTagField(models.Field):
+    """
+    Base Tag behaviour
+    """
+    description = "A hand of cards (bridge style)"
+
+    def __init__(self, *args, **kwargs):
+        kwargs['blank'] = True
+        kwargs['default'] = ""
+
+        super(BaseTagField, self).__init__(*args, **kwargs)
+
+
+class TitleTagField(with_metaclass(models.SubfieldBase, BaseTagField)):
     """
     Creates a field for Title Tag
     """
@@ -15,9 +29,12 @@ class TitleTagField(models.CharField):
         kwargs['null'] = False
         super(TitleTagField, self).__init__(*args, **kwargs)
 
+    def db_type(self, connection):
+        return 'char(%s)' % self.max_length
+
     def to_python(self, value):
         if isinstance(value, TitleTag):
             return value
-        title = super(TitleTagField, self).to_python(value)
-        titleTag = TitleTag(title=title)
+
+        titleTag = TitleTag(title=value)
         return titleTag
