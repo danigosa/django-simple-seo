@@ -19,8 +19,6 @@ dist
 *.log
 *.json
 *.wsgi
-local_settings.py
-development_settings.py
 *.egg-info
 .project
 .pydevproject
@@ -33,3 +31,7 @@ dist*
 \#*
 .\#*
 .idea
+Vagrantfile
+vagrant
+.vagrant
+requirements.txt
