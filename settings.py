@@ -26,7 +26,6 @@ SITE_ID = 1
 USE_I18N = True
 MEDIA_ROOT = ''
 MEDIA_URL = ''
-ADMIN_MEDIA_PREFIX = '/media/'
 
 CACHES = {
     'default': {

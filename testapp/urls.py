@@ -1,9 +1,15 @@
-try:
-    from django.conf.urls import patterns, url
-except ImportError:
-    from django.conf.urls.defaults import patterns, url
+from django.conf.urls import patterns, url, include
+from django.contrib import admin
+from .views import template_test
 
 urlpatterns = patterns(
-    'simple_seo.tests.testapp.views',
-    url(r'^test/', 'template_test'),
+    '',
+    url(r'^test/', template_test,  name='template_test'),
+)
+
+admin.autodiscover()
+
+urlpatterns += patterns(
+    '',
+    url(r'^admin/', include(admin.site.urls)),
 )

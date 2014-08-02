@@ -1,9 +1,11 @@
 from django.db import models
-from django.utils.six import with_metaclass
+from django.forms.fields import ChoiceField
+from simple_seo.utils import load_view_names
+
 from .tags import TitleTag
 
 
-class BaseTagField(models.Field):
+class BaseTagField(models.CharField):
     """
     Base Tag behaviour
     """
@@ -15,10 +17,17 @@ class BaseTagField(models.Field):
 
         super(BaseTagField, self).__init__(*args, **kwargs)
 
+    def get_prep_value(self, value):
+        return self.to_python(value).tag_value
 
-class TitleTagField(with_metaclass(models.SubfieldBase, BaseTagField)):
+
+class TitleTagField(BaseTagField):
     """
     Creates a field for Title Tag
+    * Not Null
+    * Not Blank
+    * Max-length 68
+    * VARCHAR(68)
     """
     description = "Field for Storing <title> tag"
 
@@ -30,11 +39,11 @@ class TitleTagField(with_metaclass(models.SubfieldBase, BaseTagField)):
         super(TitleTagField, self).__init__(*args, **kwargs)
 
     def db_type(self, connection):
-        return 'char(%s)' % self.max_length
+        return 'VARCHAR(%s)' % self.max_length
 
     def to_python(self, value):
         if isinstance(value, TitleTag):
             return value
-
-        titleTag = TitleTag(title=value)
-        return titleTag
+        title = super(TitleTagField, self).to_python(value)
+        title_tag = TitleTag(**{'value': title})
+        return title_tag
