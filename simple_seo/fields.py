@@ -1,7 +1,4 @@
 from django.db import models
-from django.forms.fields import ChoiceField
-from simple_seo.utils import load_view_names
-
 from .tags import TitleTag
 
 

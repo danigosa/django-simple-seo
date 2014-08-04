@@ -1,37 +1,70 @@
 from __future__ import print_function
-from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
+from django.core.urlresolvers import RegexURLResolver, RegexURLPattern
 import logging
+from django.conf import settings
 
 log = logging.getLogger(__name__)
 
 
-def load_view_names():
+def _load_pattern(views, pattern, namespace=None):
+    """
+    Computes RegexURLPattern
+    :param pattern: RegexURLPattern
+    :param namespace: str
+    :return: tuple
+    """
+    name = getattr(pattern, 'name', None)
+    if name:
+        if namespace:
+            views.append((namespace + ':' + name, namespace + ':' + name))
+        else:
+            views.append((name, name))
+
+
+def _load_patterns(views, patterns, namespace=None):
+    """
+    Computes RegexURLResolver
+    :param views: list
+    :param patterns: RegexURLResolver
+    :param namespace: str
+    :return:
+    """
+    for pattern in patterns:
+        if isinstance(pattern, RegexURLPattern):
+            _load_pattern(views, pattern, namespace)
+        elif isinstance(pattern, RegexURLResolver):
+            if namespace and hasattr(patterns, 'namespace'):
+                namespace += ':' + patterns.namespace
+            elif hasattr(patterns, 'namespace'):
+                namespace = patterns.namespace
+            _load_patterns(views, patterns.url_patterns, namespace)
+        else:
+            pass
+
+
+def load_view_names(urlconf=None):
     """
     Loads view names
     Warning: Only named views are loaded
-    :return: tuple
+    :return: generator
     """
-    try:
-        urlconf = __import__(settings.ROOT_URLCONF, {}, {}, [''])
-    except Exception as e:
-        raise ImproperlyConfigured("Error occurred while trying to load %s: %s" % (settings.ROOT_URLCONF, str(e)))
-
-    named_views = None
-    for view in getattr(settings, 'VIEWS_WITH_NAMESPACE', ()):
-        if named_views:
-            named_views = (named_views, (view, view))
+    if not urlconf:
+        try:
+            urlconf = __import__(settings.ROOT_URLCONF, {}, {}, [''])
+        except Exception as e:
+            raise ImproperlyConfigured("Error occurred while trying to load %s: %s" % (settings.ROOT_URLCONF, str(e)))
+    views = []
+    for p in urlconf.urlpatterns:
+        if isinstance(p, RegexURLPattern):
+            _load_pattern(views, p)
+        elif isinstance(p, RegexURLResolver):
+            _load_patterns(views, p.url_patterns, getattr(p, 'namespace', None))
         else:
-            named_views = ((view, view),)
+            pass
 
-    for pattern in urlconf.urlpatterns:
-        name = getattr(pattern, 'name', "")
-        if name:
-            if named_views:
-                named_views = (named_views, (name, name))
-            else:
-                named_views = ((name, name),)
-        else:
-            log.debug("Skipping pattern...")
+    return views
 
-    return named_views
+
+
+

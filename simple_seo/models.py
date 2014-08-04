@@ -1,11 +1,12 @@
-from .fields import TitleTagField
 from django.db import models
+from .fields import TitleTagField
+
 
 class BaseMetadata(models.Model):
     """
     Abstract Class
     """
-    view_name = models.CharField(max_length=250, null=False, blank=False, choices=())
+    view_name = models.CharField(max_length=250, null=False, blank=False, choices=(), unique=True)
     title = TitleTagField()
     # keywords = seo.KeywordTag()
     # description = seo.MetaTag(max_length=155)

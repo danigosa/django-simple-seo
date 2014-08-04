@@ -27,9 +27,15 @@ class BaseTag(object):
             print_attrs += " %s=\"%s\"" % (attr_name, attr_value)
 
         if self.self_closed:
-            return "<%s %s />" % (self.tag_name, print_attrs)
+            if len(print_attrs):
+                return "<%s %s />" % (self.tag_name, print_attrs)
+            else:
+                return "<%s/>" % self.tag_name
         else:
-            return "<%s %s>%s</%s>" % (self.tag_name, print_attrs, self.tag_value, self.tag_name)
+            if len(print_attrs):
+                return "<%s %s>%s</%s>" % (self.tag_name, print_attrs, self.tag_value, self.tag_name)
+            else:
+                return "<%s>%s</%s>" % (self.tag_name, self.tag_value, self.tag_name)
 
     def __str__(self):
         return self.print_tag()

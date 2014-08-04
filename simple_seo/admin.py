@@ -16,6 +16,3 @@ class BaseMetadataAdmin(ModelAdmin):
     list_display = ['view_name', 'title']
     exclude = []
     form = BaseMetadataForm
-
-    def save_model(self, request, obj, form, change):
-        obj.save()
