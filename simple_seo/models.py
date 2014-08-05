@@ -6,7 +6,7 @@ class BaseMetadata(models.Model):
     """
     Abstract Class
     """
-    view_name = models.CharField(max_length=250, null=False, blank=False, choices=(), unique=True)
+    view_name = models.CharField(max_length=250, null=False, blank=False, choices=(), unique=True, db_index=True)
     title = TitleTagField()
     # keywords = seo.KeywordTag()
     # description = seo.MetaTag(max_length=155)
