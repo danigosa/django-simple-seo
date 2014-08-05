@@ -1,5 +1,9 @@
 from django.db import models
-from .fields import TitleTagField
+from .fields import (
+    TitleTagField,
+    KeywordsTagField,
+    MetaTagField
+)
 
 
 class BaseMetadata(models.Model):
@@ -8,9 +12,10 @@ class BaseMetadata(models.Model):
     """
     view_name = models.CharField(max_length=250, null=False, blank=False, choices=(), unique=True, db_index=True)
     title = TitleTagField()
-    # keywords = seo.KeywordTag()
-    # description = seo.MetaTag(max_length=155)
-    # author = seo.Tag('link', head=True)
+    keywords = KeywordsTagField()
+    description = MetaTagField()
+    og_title = MetaTagField(name="og:title")
+    title2 = TitleTagField()
 
     class Meta:
         abstract = True

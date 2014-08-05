@@ -4,7 +4,11 @@ from django.core.cache import cache
 import logging
 
 from simple_seo import SEO_CACHE_PREFIX, SEO_CACHE_TIMEOUT, SEO_USE_CACHE, get_model_for_view
-from simple_seo.fields import TitleTagField
+from simple_seo.fields import (
+    TitleTagField,
+    MetaTagField,
+    KeywordsTagField
+)
 
 
 log = logging.getLogger(__name__)
@@ -38,7 +42,7 @@ class MetadataNode(template.Node):
             metadata = seo_model.objects.get(view_name=view_name)
             metadata_html = ""
             for field in metadata._meta.fields:
-                if isinstance(field, TitleTagField):
+                if isinstance(field, (TitleTagField, MetaTagField, KeywordsTagField)):
                     metadata_html += field.to_python(getattr(metadata, field.name)).print_tag() + "\n"
                 else:
                     pass
