@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils.encoding import python_2_unicode_compatible
-from django.utils.six import iteritems
+from django.contrib.staticfiles.storage import staticfiles_storage
 
 
 @python_2_unicode_compatible
@@ -95,6 +96,33 @@ class MetaTag(BaseMetatag):
                 self.meta_content = kwargs['value'][:255]
             else:
                 self.meta_content = kwargs['value']
+
+
+class ImageMetaTag(BaseMetatag):
+    """
+    Image Meta Tag class
+    """
+
+    def __init__(self, *args, **kwargs):
+        super(ImageMetaTag, self).__init__(*args, **kwargs)
+        if 'value' in kwargs:
+            if kwargs['value']:
+                if isinstance(kwargs['value'], InMemoryUploadedFile):
+                    rel_path = kwargs['path'] + kwargs['value'].name
+                    self._inmemoryuploadedfile = kwargs['value']
+                else:
+                    self._inmemoryuploadedfile = None
+                    rel_path = kwargs['value']
+                if staticfiles_storage:
+                    self.meta_content = staticfiles_storage.url(rel_path)
+                else:
+                    self.meta_content = rel_path
+    @property
+    def url(self):
+        return self.meta_content
+
+    def __str__(self):
+        return str(self.meta_content)
 
 
 class KeywordsTag(BaseMetatag):

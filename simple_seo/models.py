@@ -2,23 +2,48 @@ from django.db import models
 from .fields import (
     TitleTagField,
     KeywordsTagField,
-    MetaTagField
+    MetaTagField,
+    ImageMetaTagField,
+    URLMetaTagField
 )
 
 
 class BaseMetadata(models.Model):
     """
-    Abstract Class
+    Abstract Base Metadata Class
     """
     view_name = models.CharField(max_length=250, null=False, blank=False, choices=(), unique=True, db_index=True)
     title = TitleTagField()
     keywords = KeywordsTagField()
     description = MetaTagField()
-    og_title = MetaTagField(name="og:title")
-    title2 = TitleTagField()
+    author = MetaTagField()
 
     class Meta:
         abstract = True
+
+
+class OpenGraphMetadata(BaseMetadata):
+    """
+    Abstract Base Metadata Class with Open Graph Tags
+    """
+    og_title = MetaTagField(name='og:title', max_length=95)
+    og_type = MetaTagField(name='og:type', max_length=15)
+    og_image = ImageMetaTagField(name='og:image', upload_to='seo/images/')
+    og_url = URLMetaTagField(name='og:url')
+    og_description = MetaTagField(name='og:description', max_length=297)
+    og_admins = MetaTagField(name='og:admins', max_length=297)
+
+    class Meta:
+        abstract = True
+
+
+
+
+
+
+
+
+
 
 
         # og_title = seo.MetaTag(name='og:title', max_length=95)

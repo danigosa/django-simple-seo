@@ -1,8 +1,8 @@
-from simple_seo.models import BaseMetadata
+from simple_seo.models import OpenGraphMetadata
 from simple_seo import register
 
 
-class MyMetadata(BaseMetadata):
+class MyMetadata(OpenGraphMetadata):
     """
     My Seo Model
     """
