@@ -3,7 +3,7 @@ from django.core.urlresolvers import resolve
 from django.core.cache import cache
 import logging
 
-from simple_seo import SEO_CACHE_PREFIX, SEO_CACHE_TIMEOUT, SEO_USE_CACHE, get_model_for_view
+from .. import SEO_CACHE_PREFIX, SEO_CACHE_TIMEOUT, SEO_USE_CACHE, get_model_for_view
 from simple_seo.fields import (
     TitleTagField,
     MetaTagField,
@@ -17,7 +17,7 @@ register = template.Library()
 
 
 def _build_prefix(context, view_name):
-    SEO_CACHE_PREFIX + ':' + view_name + ':' + context['request'].path
+    return SEO_CACHE_PREFIX + ':' + view_name + ':' + context['request'].path
 
 
 class MetadataNode(template.Node):
