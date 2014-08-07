@@ -19,7 +19,7 @@ class BaseMetadata(models.Model):
     author = MetaTagField()
 
     class Meta:
-        abstract = True
+        abstract = False
 
 
 class OpenGraphMetadata(BaseMetadata):
@@ -34,7 +34,7 @@ class OpenGraphMetadata(BaseMetadata):
     og_admins = MetaTagField(name='og:admins', max_length=297)
 
     class Meta:
-        abstract = True
+        abstract = False
 
 
 class TwitterMetadata(BaseMetadata):
@@ -48,7 +48,7 @@ class TwitterMetadata(BaseMetadata):
     twitter_description = MetaTagField(name='twitter:description', max_length=200)
 
     class Meta:
-        abstract = True
+        abstract = False
 
 
 class AllMetadata(OpenGraphMetadata):
@@ -62,4 +62,19 @@ class AllMetadata(OpenGraphMetadata):
     twitter_description = MetaTagField(name='twitter:description', max_length=200)
 
     class Meta:
-        abstract = True
+        abstract = False
+
+try:
+    # In case South is installed
+    from south.modelsinspector import add_introspection_rules
+    add_introspection_rules(
+        [],
+        [
+            "^simple_seo\.fields\.TitleTagField",
+            "^simple_seo\.fields\.MetaTagField",
+            "^simple_seo\.fields\.URLMetaTagField",
+            "^simple_seo\.fields\.ImageMetaTagField",
+            "^simple_seo\.fields\.KeywordsTagField",
+        ])
+except ImportError:
+    pass
