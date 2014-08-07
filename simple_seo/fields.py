@@ -57,7 +57,7 @@ class BaseImageTagField(with_metaclass(models.SubfieldBase, models.ImageField)):
         "Returns field's value just before saving."
         file = FieldFile(model_instance, self, super(FileField, self).pre_save(model_instance, add).meta_content)
         tag = super(FileField, self).pre_save(model_instance, add)  # Let's hack this
-        if hasattr(tag, '_inmemoryuploadedfile'):
+        if hasattr(tag, '_inmemoryuploadedfile') and getattr(tag, '_inmemoryuploadedfile'):
             file.save(file.name, tag._inmemoryuploadedfile, save=False)
         return file
 
