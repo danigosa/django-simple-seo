@@ -42,6 +42,17 @@ You can use pip with git master code instead of pypi version:
 
     $ pip install git+https://github.com/danigosa/django-simple-seo.git
 
+Add to your settings:
+
+.. code-block:: python
+
+    INSTALLED_APPS = (
+    ...
+    'simple_seo',
+    ...
+    )
+
+    $ pip install git+https://github.com/danigosa/django-simple-seo.git
 
 Requeriments
 ------------
@@ -49,6 +60,7 @@ Requeriments
  * staticfiles
  * south (optional, if migrations)
  * admin (this includes auth, sessions and contenttypes)
+ 
 
 1. Create your SEO Model
 ------------------------
