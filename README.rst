@@ -142,6 +142,10 @@ Just override **og_image** attribute. You can find all base models in **simple_s
     register(MyMetadata)
 
 
+7. Sample App
+-------------
+
+You have a complete sample app in **testapp** module in this repository.
 
 
 Changelog
