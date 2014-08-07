@@ -25,7 +25,7 @@ What's in django-simple-seo
 What's NOT in django-simple-seo
 *******************************
 
- * Only implements view based backend. Maybe in future releases it will include Model and Path backend like in DjangoSeo.
+ * Only implements view based backend. Maybe in future releases it will include Model and Path backend like in DjangoSeo. The attribute 'populate_from' is neither implemented yet.
 
 Installation
 ------------
