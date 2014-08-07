@@ -63,7 +63,7 @@ Requeriments
 1. Create your SEO Model
 ------------------------
 
-Create a model subclassing the classes BaseMetada(title, author, description, keywords), OpenGraphMetada(includes facebook tags) or AllMetadata(Facebook and Twitter)
+Create a model subclassing the classes BaseMetada(title, author, description, keywords), OpenGraphMetada(includes facebook tags) or AllMetadata(Facebook and Twitter). You must use **register** to register the model.
 
 .. code-block:: python
 
