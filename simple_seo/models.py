@@ -29,7 +29,7 @@ class OpenGraphMetadata(BaseMetadata):
     og_title = MetaTagField(name='og:title', max_length=95, null=True, blank=True)
     og_type = MetaTagField(name='og:type', max_length=15, null=True, blank=True)
     og_image = ImageMetaTagField(name='og:image', upload_to='seo/images/', null=True, blank=True)
-    og_url = URLMetaTagField(name='og:url', null=True, blank=True, null=True, blank=True)
+    og_url = URLMetaTagField(name='og:url', null=True, blank=True)
     og_description = MetaTagField(name='og:description', max_length=297, null=True, blank=True)
     og_admins = MetaTagField(name='og:admins', max_length=297, null=True, blank=True)
 
@@ -44,7 +44,6 @@ class TwitterMetadata(BaseMetadata):
     twitter_title = MetaTagField(name='twitter:title', max_length=70, null=True, blank=True)
     twitter_card = MetaTagField(name='twitter:card', max_length=15, null=True, blank=True)
     twitter_image = ImageMetaTagField(name='twitter:image', upload_to='seo/images/', null=True, blank=True)
-    twitter_url = URLMetaTagField(name='twitter:url')
     twitter_description = MetaTagField(name='twitter:description', max_length=200, null=True, blank=True)
 
     class Meta:
