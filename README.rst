@@ -52,8 +52,6 @@ Add to your settings:
     ...
     )
 
-    $ pip install git+https://github.com/danigosa/django-simple-seo.git
-
 Requeriments
 ------------
 
