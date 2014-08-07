@@ -149,8 +149,21 @@ Just override **og_image** attribute. You can find all base models in **simple_s
 You have a complete sample app in **testapp** module in this repository.
 
 
+8. Contribute!
+--------------
+
+To execute the testapp you only need **vagrant** and **virtualbox** installed, once you got them just execute:
+
+.. code-block:: sh
+
+    $ vagrant up
+    $ vagrant ssh
+
+You can find more info of how to develop with remote vagrant servers and the awesome Pycharm IDE here: http://codeispoetry.me/index.php/remote-server-with-pycharm-and-vagrant/
+
+
 Changelog
----------
+=========
 
 **Version 0.2**
 
