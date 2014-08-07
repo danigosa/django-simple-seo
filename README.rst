@@ -43,6 +43,13 @@ You can use pip with git master code instead of pypi version:
     $ pip install git+https://github.com/danigosa/django-simple-seo.git
 
 
+Requeriments
+------------
+
+ * staticfiles
+ * south (optional, if migrations)
+ * admin (this includes auth, sessions and contenttypes)
+
 1. Create your SEO Model
 ------------------------
 
@@ -183,6 +190,10 @@ You can find more info of how to develop with remote vagrant servers and the awe
 
 Changelog
 =========
+
+**Version 0.2.1**
+ * Bufixes
+ * Support for South Migrations
 
 **Version 0.2**
 
