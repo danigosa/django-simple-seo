@@ -1,2 +1,11 @@
 Changelog
 =========
+
+version 0.2.0
+-------------
+
+ * Added support for namespaced views
+ * Added support for ImageField based Image Metatags (og:image, twitter:image)
+ * Added support for UrlField based URL Metatags (og:url, twitter:url)
+ * Added more base classes to ease setup
+
