@@ -16,7 +16,7 @@ class BaseMetadata(models.Model):
     title = TitleTagField()
     keywords = KeywordsTagField()
     description = MetaTagField()
-    author = MetaTagField()
+    author = MetaTagField(null=True, blank=True)
 
     class Meta:
         abstract = False
@@ -26,12 +26,12 @@ class OpenGraphMetadata(BaseMetadata):
     """
     Abstract Base Metadata Class with Open Graph Tags
     """
-    og_title = MetaTagField(name='og:title', max_length=95)
-    og_type = MetaTagField(name='og:type', max_length=15)
-    og_image = ImageMetaTagField(name='og:image', upload_to='seo/images/')
-    og_url = URLMetaTagField(name='og:url')
-    og_description = MetaTagField(name='og:description', max_length=297)
-    og_admins = MetaTagField(name='og:admins', max_length=297)
+    og_title = MetaTagField(name='og:title', max_length=95, null=True, blank=True)
+    og_type = MetaTagField(name='og:type', max_length=15, null=True, blank=True)
+    og_image = ImageMetaTagField(name='og:image', upload_to='seo/images/', null=True, blank=True)
+    og_url = URLMetaTagField(name='og:url', null=True, blank=True, null=True, blank=True)
+    og_description = MetaTagField(name='og:description', max_length=297, null=True, blank=True)
+    og_admins = MetaTagField(name='og:admins', max_length=297, null=True, blank=True)
 
     class Meta:
         abstract = False
@@ -41,11 +41,11 @@ class TwitterMetadata(BaseMetadata):
     """
     Abstract Base Metadata Class with Twitter Tags
     """
-    twitter_title = MetaTagField(name='twitter:title', max_length=70)
-    twitter_card = MetaTagField(name='twitter:card', max_length=15)
-    twitter_image = ImageMetaTagField(name='twitter:image', upload_to='seo/images/')
+    twitter_title = MetaTagField(name='twitter:title', max_length=70, null=True, blank=True)
+    twitter_card = MetaTagField(name='twitter:card', max_length=15, null=True, blank=True)
+    twitter_image = ImageMetaTagField(name='twitter:image', upload_to='seo/images/', null=True, blank=True)
     twitter_url = URLMetaTagField(name='twitter:url')
-    twitter_description = MetaTagField(name='twitter:description', max_length=200)
+    twitter_description = MetaTagField(name='twitter:description', max_length=200, null=True, blank=True)
 
     class Meta:
         abstract = False
@@ -55,11 +55,11 @@ class AllMetadata(OpenGraphMetadata):
     """
     Abstract Base Metadata Class with All Tags
     """
-    twitter_title = MetaTagField(name='twitter:title', max_length=70)
-    twitter_card = MetaTagField(name='twitter:card', max_length=15)
-    twitter_image = ImageMetaTagField(name='twitter:image', upload_to='seo/images/')
-    twitter_url = URLMetaTagField(name='twitter:url')
-    twitter_description = MetaTagField(name='twitter:description', max_length=200)
+    twitter_title = MetaTagField(name='twitter:title', max_length=70, null=True, blank=True)
+    twitter_card = MetaTagField(name='twitter:card', max_length=15, null=True, blank=True)
+    twitter_image = ImageMetaTagField(name='twitter:image', upload_to='seo/images/', null=True, blank=True)
+    twitter_url = URLMetaTagField(name='twitter:url', null=True, blank=True)
+    twitter_description = MetaTagField(name='twitter:description', max_length=200, null=True, blank=True)
 
     class Meta:
         abstract = False
