@@ -2,7 +2,7 @@
 Simple Seo Backend for Django
 =============================
 
-Simple cache backend for Django. Inspired by django-seo ( https://github.com/willhardy/django-seo ) but found it quite
+Simple seo backend for Django. Inspired by django-seo ( https://github.com/willhardy/django-seo ) but found it quite
 complex for the simple functionality it was intended for.
 
 django-simple-seo aims to attach a model to your views with just 4 simple lines of code and everything configured by the admin.
@@ -142,14 +142,25 @@ Just override **og_image** attribute. You can find all base models in **simple_s
     # Register SEO Model
     register(MyMetadata)
 
+7. App Settings
+---------------
 
-7. Sample App
+Some settings are provided to enable caching directly in the app:
+
+.. code-block:: python
+
+    SEO_CACHE_PREFIX = getattr(settings, 'SEO_CACHE_PREFIX', 'simple_seo:')
+    SEO_CACHE_TIMEOUT = getattr(settings, 'SEO_CACHE_PREFIX', 60 * 60 * 24)
+    SEO_USE_CACHE = getattr(settings, 'SEO_CACHE_PREFIX', False)
+
+
+8. Sample App
 -------------
 
 You have a complete sample app in **testapp** module in this repository.
 
 
-8. Contribute!
+9. Contribute!
 --------------
 
 To execute the testapp you only need **vagrant** and **virtualbox** installed, once you got them just execute:
@@ -159,7 +170,15 @@ To execute the testapp you only need **vagrant** and **virtualbox** installed, o
     $ vagrant up
     $ vagrant ssh
 
+Then add to the root of the project your **local_settings.py** for everything your need, for instance adding debug toolbar local setting:
+
+.. code-block:: python
+
+    INTERNAL_IPS = ('10.0.2.2', )
+
+
 You can find more info of how to develop with remote vagrant servers and the awesome Pycharm IDE here: http://codeispoetry.me/index.php/remote-server-with-pycharm-and-vagrant/
+
 
 
 Changelog
