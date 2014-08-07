@@ -4,7 +4,7 @@ from django.core.cache import cache
 import logging
 
 from .. import SEO_CACHE_PREFIX, SEO_CACHE_TIMEOUT, SEO_USE_CACHE, get_model_for_view
-from simple_seo.fields import (
+from ..fields import (
     TitleTagField,
     MetaTagField,
     KeywordsTagField
