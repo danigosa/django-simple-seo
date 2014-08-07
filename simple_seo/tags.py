@@ -38,9 +38,11 @@ class BaseTag(object):
             else:
                 return "<%s>%s</%s>" % (self.tag_name, self.tag_value, self.tag_name)
 
-
     def __str__(self):
-        raise NotImplementedError("Must implement tag output __str__()")
+        if self.self_closed:
+            return self.meta_content
+        else:
+            return self.tag_value
 
     def __len__(self):
         raise NotImplementedError("Must implement tag output __len__()")
