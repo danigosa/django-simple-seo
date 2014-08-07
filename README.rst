@@ -122,6 +122,7 @@ Just include this template tag in your **<head>** section:
 ------------------------------------
 
 *"I prefer to have images as URLs, not static files in my server"*
+
 Just override **og_image** attribute. You can find all base models in **simple_seo.models**, and all tag fields in **simple_seo.fields**:
 
 .. code-block:: python
