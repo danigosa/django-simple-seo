@@ -2,7 +2,7 @@
 Simple Seo Backend for Django
 =============================
 
-Simple cache backend for Django. Inspired by django-seo ( https://github.com/willhardy/django-seo ) but found it quite
+Simple seo backend for Django. Inspired by django-seo ( https://github.com/willhardy/django-seo ) but found it quite
 complex for the simple functionality it was intended for.
 
 django-simple-seo aims to attach a model to your views with just 4 simple lines of code and everything configured by the admin.
