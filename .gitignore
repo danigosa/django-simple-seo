@@ -37,3 +37,4 @@ vagrant
 requirements.txt
 static
 media
+test.db
