@@ -204,8 +204,10 @@ Changelog
 =========
 
 **Version 0.2.1**
+
  * Bufixes
  * Support for South Migrations
+
 
 **Version 0.2**
 

@@ -1,6 +1,13 @@
 Changelog
 =========
 
+version 0.2.1
+-------------
+
+ * Bufixes
+ * Support for South Migrations
+
+
 version 0.2.0
 -------------
 

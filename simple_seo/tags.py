@@ -38,6 +38,7 @@ class BaseTag(object):
             else:
                 return "<%s>%s</%s>" % (self.tag_name, self.tag_value, self.tag_name)
 
+
     def __str__(self):
         raise NotImplementedError("Must implement tag output __str__()")
 
@@ -76,6 +77,9 @@ class BaseMetatag(BaseTag):
         self.self_closed = True
         if 'name' in kwargs:
             self.meta_name = kwargs['name']
+
+    def __unicode__(self):
+        return self.meta_content
 
     def __str__(self):
         return self.meta_content
