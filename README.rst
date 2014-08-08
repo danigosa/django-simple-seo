@@ -14,7 +14,7 @@ What's in django-simple-seo
  * View Autodiscovering
  * Pure Django Models and Django Fields implementation, no metaclasses in action
  * Don't reinvent the wheel: as long as they are django models you can use the goodies out there
- * i18n with django-vinaigrette, django-linuo, django-modeltranslation, etc.
+ * i18n with django-vinaigrette, django-linguo, django-modeltranslation, etc.
  * Cache can be activated internally, but can also be used with johnny-cache, django-cache-machine, etc.
  * Easily extendible as far as it's all about simple django models and fields
  * Support for UrlFields and ImageFields in admin
@@ -196,7 +196,7 @@ Changelog
 
 **Version 0.2.1**
 
- * Bufixes
+ * Bugfixes
  * Support for South Migrations
 
 
