@@ -160,8 +160,8 @@ Just override **og_image** attribute. You can find all base models in **simple_s
     # Register SEO Model
     register(MyMetadata)
 
-7. App Settings
----------------
+7. Cache Settings
+-----------------
 
 Some settings are provided to enable caching directly in the app:
 
