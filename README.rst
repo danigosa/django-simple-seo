@@ -199,6 +199,10 @@ You can find more info of how to develop with remote vagrant servers and the awe
 Changelog
 =========
 
+**version 0.2.2**
+
+ * Bufix errors in view  autodiscover in some cases
+
 **Version 0.2.1**
 
  * Bugfixes

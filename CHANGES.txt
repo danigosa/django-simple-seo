@@ -1,6 +1,11 @@
 Changelog
 =========
 
+version 0.2.2
+-------------
+
+ * Bufix errors in view  autodiscover in some cases
+
 version 0.2.1
 -------------
 
