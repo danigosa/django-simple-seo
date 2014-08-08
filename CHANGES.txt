@@ -1,15 +1,23 @@
 Changelog
 =========
 
+version 0.2.4
+-------------
+
+ * Bugfix error in print_tag that did not printed images and urls in templatetag
+
+
 version 0.2.3
 -------------
 
  * Bugfix error in caching when i18n activated
 
+
 version 0.2.2
 -------------
 
  * Bufix errors in view  autodiscover in some cases
+
 
 version 0.2.1
 -------------
