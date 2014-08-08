@@ -178,8 +178,52 @@ Some settings are provided to enable caching directly in the app:
 You have a complete sample app in **testapp** module in this repository.
 
 
-9. Contribute!
---------------
+9. Multilang i18n Support
+-------------------------
+
+As said before you can apply any 3rd party app for translating your models to django-simple-seo models.
+As an example, this is a complete model translated thanks to django-vinaigrette app: https://github.com/ecometrica/django-vinaigrette
+
+Complete SEO model translated:
+
+.. code-block:: python
+
+    from simple_seo.models import AllMetadata
+    from simple_seo import register
+    import vinaigrette
+
+
+    class SiteMetadata(AllMetadata):
+        """
+        Site Metadata
+        """
+
+        class Meta:
+            app_label = 'web'
+
+    # Register SEO Model
+    register(SiteMetadata)
+
+
+    vinaigrette.register(
+        SiteMetadata,
+        [
+            'title',
+            'description',
+            'keywords',
+            'author',
+            'og:title',
+            'og:description',
+            'twitter:title',
+            'twitter:description',
+        ]
+    )
+
+After that, just run **./manage.py makemessages** and you're done. See django-vinaigrette for more details.
+
+
+10. Contribute!
+---------------
 
 Then add to the root of the project your **local_settings.py** for everything your need, for instance adding debug toolbar local setting:
 
