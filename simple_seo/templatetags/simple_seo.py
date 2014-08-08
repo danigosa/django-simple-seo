@@ -8,7 +8,9 @@ from .. import SEO_CACHE_PREFIX, SEO_CACHE_TIMEOUT, SEO_USE_CACHE, get_model_for
 from ..fields import (
     TitleTagField,
     MetaTagField,
-    KeywordsTagField
+    KeywordsTagField,
+    URLMetaTagField,
+    ImageMetaTagField
 )
 
 
@@ -44,7 +46,8 @@ class MetadataNode(template.Node):
             metadata = seo_model.objects.get(view_name=view_name)
             metadata_html = ""
             for field in metadata._meta.fields:
-                if isinstance(field, (TitleTagField, MetaTagField, KeywordsTagField)):
+                if isinstance(field,
+                              (TitleTagField, MetaTagField, KeywordsTagField, URLMetaTagField, ImageMetaTagField)):
                     metadata_html += field.to_python(getattr(metadata, field.name)).print_tag() + "\n"
                 else:
                     pass

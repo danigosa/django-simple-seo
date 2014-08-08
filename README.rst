@@ -244,13 +244,20 @@ You can find more info of how to develop with remote vagrant servers and the awe
 Changelog
 =========
 
+**version 0.2.4**
+
+ * Bugfix error in print_tag that did not printed images and urls in templatetag
+
+
 **version 0.2.3**
 
  * Bugfix error in caching when i18n activated
 
+
 **version 0.2.2**
 
  * Bugfix errors in view  autodiscover in some cases
+
 
 **Version 0.2.1**
 
