@@ -200,10 +200,13 @@ You can find more info of how to develop with remote vagrant servers and the awe
 Changelog
 =========
 
+**version 0.2.3**
+
+ * Bugfix error in caching when i18n activated
+
 **version 0.2.2**
 
  * Bugfix errors in view  autodiscover in some cases
- * Bugfix error in caching when i18n activated
 
 **Version 0.2.1**
 
