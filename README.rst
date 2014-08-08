@@ -180,13 +180,6 @@ You have a complete sample app in **testapp** module in this repository.
 9. Contribute!
 --------------
 
-To execute the testapp you only need **vagrant** and **virtualbox** installed, once you got them just execute:
-
-.. code-block:: sh
-
-    $ vagrant up
-    $ vagrant ssh
-
 Then add to the root of the project your **local_settings.py** for everything your need, for instance adding debug toolbar local setting:
 
 .. code-block:: python
