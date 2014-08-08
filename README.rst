@@ -202,7 +202,8 @@ Changelog
 
 **version 0.2.2**
 
- * Bufix errors in view  autodiscover in some cases
+ * Bugfix errors in view  autodiscover in some cases
+ * Bugfix error in caching when i18n activated
 
 **Version 0.2.1**
 

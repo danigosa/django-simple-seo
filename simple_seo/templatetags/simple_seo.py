@@ -1,6 +1,7 @@
 from django import template
 from django.core.urlresolvers import resolve
 from django.core.cache import cache
+from django.utils import translation
 import logging
 
 from .. import SEO_CACHE_PREFIX, SEO_CACHE_TIMEOUT, SEO_USE_CACHE, get_model_for_view
@@ -17,7 +18,8 @@ register = template.Library()
 
 
 def _build_prefix(context, view_name):
-    return SEO_CACHE_PREFIX + ':' + view_name + ':' + context['request'].path
+    lang = translation.get_language()
+    return SEO_CACHE_PREFIX + ':' + view_name + ':' + lang + ':' + context['request'].path
 
 
 class MetadataNode(template.Node):
