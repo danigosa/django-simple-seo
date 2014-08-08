@@ -84,7 +84,7 @@ Create a model subclassing the classes BaseMetada(title, author, description, ke
 2. Synchronize your DB
 ----------------------
 
-Synchronize your database with **syncdb** or **migrate** depending on your case:
+Synchronize your database with **syncdb**, then your model with **migrate** if you are using migrations:
 
 .. code-block:: sh
 
@@ -108,7 +108,25 @@ Add this lines to your admin.py:
     admin.site.register(MyMetadata, MyMetadataAdmin)
 
 
-4. Add metadata for your views
+4. Configure URLs for autodiscover
+----------------------------------
+
+**WARNING:** It's a django related issue but once you call *admin.autodiscover()* the URLConf module remains corrupted forever, that means cannot dive into *urlpatterns*.
+
+To solve that, try to add admin URL and do autodiscovering at the very end of your **urls.py** like this:
+
+.. code-block:: python
+
+    admin.autodiscover()
+
+    urlpatterns += patterns(
+        '',
+        url(r'^admin/', include(admin.site.urls)),
+    )
+
+This will avoid *autodiscover* admin views, and also to see your actual views urlpatterns.
+
+5. Add metadata for your views
 ------------------------------
 
 Your views are autodiscovered for your convenience, create a metadata object for every view you want to administer
@@ -117,7 +135,7 @@ Your views are autodiscovered for your convenience, create a metadata object for
     :width: 100%
 
 
-5. Add metadata to your template
+6. Add metadata to your template
 --------------------------------
 
 Just include this template tag in your **<head>** section:
@@ -136,7 +154,7 @@ Just include this template tag in your **<head>** section:
     </body>
     </html>
 
-6. Extend/Override default behaviour
+7. Extend/Override default behaviour
 ------------------------------------
 
 *"I prefer to have images as URLs, not static files in my server"*
@@ -160,7 +178,7 @@ Just override **og_image** attribute. You can find all base models in **simple_s
     # Register SEO Model
     register(MyMetadata)
 
-7. Cache Settings
+8. Cache Settings
 -----------------
 
 Some settings are provided to enable caching directly in the app:
@@ -172,14 +190,14 @@ Some settings are provided to enable caching directly in the app:
     SEO_USE_CACHE = getattr(settings, 'SEO_CACHE_PREFIX', False)
 
 
-8. Sample App
+9. Sample App
 -------------
 
 You have a complete sample app in **testapp** module in this repository.
 
 
-9. Multilang i18n Support
--------------------------
+10. Multilang i18n Support
+--------------------------
 
 As said before you can apply any 3rd party app for translating your models to django-simple-seo models.
 As an example, this is a complete model translated thanks to django-vinaigrette app: https://github.com/ecometrica/django-vinaigrette
