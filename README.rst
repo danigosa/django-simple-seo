@@ -17,6 +17,7 @@ What's in django-simple-seo
  * i18n with django-vinaigrette, django-linguo, django-modeltranslation, etc.
  * Cache can be activated internally, but can also be used with johnny-cache, django-cache-machine, etc.
  * Easily extendible as far as it's all about simple django models and fields
+ * Out-of-the-box models for OpenGraph Facebook and Twitter tags
  * Support for UrlFields and ImageFields in admin
  * Test app included (.testapp)
 
