@@ -185,7 +185,12 @@ Then add to the root of the project your **local_settings.py** for everything yo
 .. code-block:: python
 
     INTERNAL_IPS = ('10.0.2.2', )
+    
+To execute the project with **vagrant** and **virtualbox** you can add this Vagrantfile and receipes to the local project and execute **vagrant up**:
 
+https://gist.github.com/danigosa/c2ac2d349c4fcf823cb7
+
+After box is provisioned you'll have an Ubuntu 14.04 with a Python 3.4 virtualenv.
 
 You can find more info of how to develop with remote vagrant servers and the awesome Pycharm IDE here: http://codeispoetry.me/index.php/remote-server-with-pycharm-and-vagrant/
 
