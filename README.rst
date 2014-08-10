@@ -4,7 +4,8 @@ Simple Seo Backend for Django
 
 .. image:: https://drone.io/github.com/danigosa/django-simple-seo/status.png
    :target: https://drone.io/github.com/danigosa/django-simple-seo
-   
+.. image:: tests_html/coverage_status.png   
+   :target: https://drone.io/github.com/danigosa/django-simple-seo
 
 Simple seo backend for Django. Inspired by django-seo ( https://github.com/willhardy/django-seo ) but found it quite
 complex for the simple functionality it was intended for.
