@@ -2,5 +2,5 @@ Django==1.6.5
 django-debug-toolbar==1.2.1
 Pillow==2.5.1
 # django-coverage==1.2.4
-git+https://github.com/kmike/django-coverage.git@d644141c3fee07c62cc048fcf2dca01ddad6e239  # Fully supports python 3.x
+git+https://github.com/kmike/django-coverage.git  # Fully supports python 3.x only in master
 coverage==3.7.1
