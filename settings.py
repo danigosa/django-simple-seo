@@ -12,6 +12,7 @@
 # database backends as possible.  You may want to create a separate settings
 # file for each of the backends you test against.
 import os
+
 DEBUG = True
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 DATABASES = {
@@ -33,8 +34,6 @@ CACHES = {
         'LOCATION': ''
     }
 }
-
-TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'
 
 INSTALLED_APPS = (
     'django.contrib.staticfiles',
@@ -113,6 +112,18 @@ LOGGING = {
         },
     }
 }
+
+TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
+COVERAGE_BADGE_TYPE = 'drone.io'
+COVERAGE_CODE_EXCLUDES = [
+    'def __unicode__\(self\):',
+    'def get_absolute_url\(self\):',
+    'from .* import .*', 'import .*',
+    'simple_seo.admin',
+    'simple_seo.__pycache__',
+    'simple_seo.templatetags.__pycache__'
+]
+COVERAGE_REPORT_HTML_OUTPUT_DIR = 'tests_html'
 
 try:
     from local_settings import *

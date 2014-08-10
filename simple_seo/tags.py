@@ -15,6 +15,27 @@ class BaseTag(object):
     meta_content = ""
     tag_value = ""
 
+    def __init__(self, tag_name=None, self_closed=None, meta_name=None, meta_content=None, tag_value=None):
+        """
+        Explicit Initialization of Tag
+        :param tag_name:
+        :param self_closed:
+        :param meta_name:
+        :param meta_content:
+        :param tag_value:
+        :return:
+        """
+        if tag_name:
+            self.tag_name = tag_name
+        if tag_value:
+            self.tag_value = tag_value
+        if self_closed is not None:
+            self.self_closed = self_closed
+        if meta_name:
+            self.meta_name = meta_name
+        if meta_content:
+            self.meta_content = meta_content
+
     def print_tag(self):
         """
         Builds tag as text for printing
@@ -29,14 +50,11 @@ class BaseTag(object):
 
         if self.self_closed:
             if self.meta_name and self.meta_content:
-                return "<%s name='%s' content='%s' />" % (self.tag_name, self.meta_name, self.meta_content)
+                return "<%s name=\"%s\" content=\"%s\" />" % (self.tag_name, self.meta_name, self.meta_content)
             else:
                 return "<%s/>" % self.tag_name
         else:
-            if self.meta_name and self.meta_content:
-                return "<%s name='%s' content='%s'>%s</%s>" % (self.tag_name, self.meta_name, self.meta_content, self.tag_value, self.tag_name)
-            else:
-                return "<%s>%s</%s>" % (self.tag_name, self.tag_value, self.tag_name)
+            return "<%s>%s</%s>" % (self.tag_name, self.tag_value, self.tag_name)
 
     def __str__(self):
         if self.self_closed:
@@ -54,6 +72,7 @@ class TitleTag(BaseTag):
     """
 
     def __init__(self, *args, **kwargs):
+        super(TitleTag, self).__init__(*args, **kwargs)
         self.tag_name = "title"
         self.self_closed = False
         if 'value' in kwargs:
@@ -75,6 +94,7 @@ class BaseMetatag(BaseTag):
     """
 
     def __init__(self, *args, **kwargs):
+        super(BaseMetatag, self).__init__(*args, **kwargs)
         self.tag_name = 'meta'
         self.self_closed = True
         if 'name' in kwargs:

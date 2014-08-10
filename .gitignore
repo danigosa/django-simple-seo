@@ -38,3 +38,4 @@ requirements.txt
 static
 media
 test.db
+tests_html
