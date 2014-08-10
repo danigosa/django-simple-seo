@@ -2,7 +2,7 @@
 Simple Seo Backend for Django
 =============================
 
-..image:: https://drone.io/github.com/danigosa/django-simple-seo/status.png
+.. image:: https://drone.io/github.com/danigosa/django-simple-seo/status.png
    :target: https://drone.io/github.com/danigosa/django-simple-seo
    
 
