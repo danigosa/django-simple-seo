@@ -34,7 +34,6 @@ dist*
 Vagrantfile
 vagrant
 .vagrant
-requirements.txt
 static
 media
 test.db
