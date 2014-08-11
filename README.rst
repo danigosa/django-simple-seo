@@ -2,6 +2,9 @@
 Simple Seo Backend for Django
 =============================
 
+.. image:: https://travis-ci.org/danigosa/django-simple-seo.svg?branch=master
+   :target: https://travis-ci.org/danigosa/django-simple-seo
+
 Simple seo backend for Django. Inspired by django-seo ( https://github.com/willhardy/django-seo ) but found it quite
 complex for the simple functionality it was intended for.
 
