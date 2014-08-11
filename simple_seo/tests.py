@@ -1,10 +1,10 @@
 from django.test import TestCase
 from django.test.testcases import LiveServerTestCase
 
-from simple_seo.tags import BaseTag
+from simple_seo.tags import BaseTag, TitleTag
 from selenium.webdriver.firefox.webdriver import WebDriver as FirefoxDriver
-from selenium.webdriver.chrome.webdriver import WebDriver as ChromeDriver
-from selenium.webdriver.ie.webdriver import WebDriver as IEDriver
+# from selenium.webdriver.chrome.webdriver import WebDriver as ChromeDriver
+from testapp.models import MyMetadata
 
 
 class TagPrintingTest(TestCase):
@@ -37,25 +37,31 @@ class FieldPrintingTest(LiveServerTestCase):
     """
     Testing TagFields objects printing functions
     """
-    fixtures = ['fixtures/metadata_fixture.json']
+    def setUp(self):
+        self.mymetadata = MyMetadata()
+        self.mymetadata.view_name = 'template_test'
+        self.mymetadata.title = TitleTag(tag_value='Title Test')
+        self.mymetadata.save()
 
-    @classmethod
-    def setUpClass(cls):
-        cls.firefox = FirefoxDriver()
-        cls.chrome = ChromeDriver()
-        cls.iexplorer = IEDriver()
-        super(FieldPrintingTest, cls).setUpClass()
+        self.firefox = FirefoxDriver()
+        # self.chrome = ChromeDriver()
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.firefox.quit()
-        cls.chrome.quit()
-        cls.iexplorer.quit()
-        super(FieldPrintingTest, cls).tearDownClass()
+    def tearDown(self):
+        self.firefox.quit()
+        # self.chrome.quit()
 
-    def test_title_rendering(self):
+    def test_title_firefox_rendering(self):
         self.firefox.get('%s%s' % (self.live_server_url, '/test/'))
-        self.firefox.find_element_by_tag_name('head')
+        title_element = self.firefox.title
+        self.assertIsNotNone(title_element)
+        self.assertEqual(title_element, 'Title Test')
+
+    # def test_title_chrome_rendering(self):
+    #     self.chrome.get('%s%s' % (self.live_server_url, '/test/'))
+    #     title_element = self.chrome.title
+    #     self.assertIsNotNone(title_element)
+    #     self.assertEqual(title_element, 'Title Test')
+
 
 
 

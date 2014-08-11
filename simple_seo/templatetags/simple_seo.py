@@ -39,6 +39,7 @@ class MetadataNode(template.Node):
         if SEO_USE_CACHE:
             metadata_html = cache.get(_build_prefix(context, view_name))
             if metadata_html:
+                log.debug("Cache metadata hit for view %s" % view_name)
                 return metadata_html
 
         seo_model = get_model_for_view(view_name)
@@ -48,7 +49,9 @@ class MetadataNode(template.Node):
             for field in metadata._meta.fields:
                 if isinstance(field,
                               (TitleTagField, MetaTagField, KeywordsTagField, URLMetaTagField, ImageMetaTagField)):
-                    metadata_html += field.to_python(getattr(metadata, field.name)).print_tag() + "\n"
+                    printed_tag = field.to_python(getattr(metadata, field.name)).print_tag()
+                    if printed_tag and printed_tag != "":
+                        metadata_html += printed_tag + "\n"
                 else:
                     pass
             if metadata_html != "" and SEO_USE_CACHE:

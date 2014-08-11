@@ -1,1 +1,1 @@
-[{"fields": {}, "pk": 1, "model": "testapp.mymetadata"}]
+[{"pk": 1, "model": "testapp.mymetadata", "fields": {}}]

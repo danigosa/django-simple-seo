@@ -44,17 +44,16 @@ class BaseTag(object):
         if not isinstance(self, BaseTag):
             raise TypeError("Tag must be of class simple-seo.tags.BaseTag")
 
-        # print_attrs = ""
-        # for attr_name, attr_value in iteritems(self._attributes):
-        #     print_attrs += " %s=\"%s\"" % (attr_name, attr_value)
-
         if self.self_closed:
             if self.meta_name and self.meta_content:
                 return "<%s name=\"%s\" content=\"%s\" />" % (self.tag_name, self.meta_name, self.meta_content)
             else:
-                return "<%s/>" % self.tag_name
+                return ""
         else:
-            return "<%s>%s</%s>" % (self.tag_name, self.tag_value, self.tag_name)
+            if self.tag_value:
+                return "<%s>%s</%s>" % (self.tag_name, self.tag_value, self.tag_name)
+            else:
+                return ""
 
     def __str__(self):
         if self.self_closed:
@@ -71,8 +70,8 @@ class TitleTag(BaseTag):
     Title Tag class
     """
 
-    def __init__(self, *args, **kwargs):
-        super(TitleTag, self).__init__()
+    def __init__(self, tag_name=None, self_closed=None, meta_name=None, meta_content=None, tag_value=None, *args, **kwargs):
+        super(TitleTag, self).__init__(tag_name=tag_name, self_closed=self_closed, meta_name=meta_name, meta_content=meta_content, tag_value=tag_value)
         self.tag_name = "title"
         self.self_closed = False
         if 'value' in kwargs:
@@ -93,8 +92,9 @@ class BaseMetatag(BaseTag):
     Base Meta Tag
     """
 
-    def __init__(self, *args, **kwargs):
-        super(BaseMetatag, self).__init__()
+    def __init__(self, tag_name=None, self_closed=None, meta_name=None, meta_content=None, tag_value=None, *args, **kwargs):
+        super(BaseMetatag, self).__init__(tag_name=tag_name, self_closed=self_closed, meta_name=meta_name, meta_content=meta_content, tag_value=tag_value)
+
         self.tag_name = 'meta'
         self.self_closed = True
         if 'name' in kwargs:
@@ -115,8 +115,9 @@ class MetaTag(BaseMetatag):
     Meta Tag class
     """
 
-    def __init__(self, *args, **kwargs):
-        super(MetaTag, self).__init__(*args, **kwargs)
+    def __init__(self, tag_name=None, self_closed=None, meta_name=None, meta_content=None, tag_value=None, *args, **kwargs):
+        super(BaseMetatag, self).__init__(tag_name=tag_name, self_closed=self_closed, meta_name=meta_name, meta_content=meta_content, tag_value=tag_value)
+
         if 'value' in kwargs:
             if kwargs['value'] and len(kwargs['value']) > 255:
                 self.meta_content = kwargs['value'][:255]
@@ -129,8 +130,9 @@ class ImageMetaTag(BaseMetatag):
     Image Meta Tag class
     """
 
-    def __init__(self, *args, **kwargs):
-        super(ImageMetaTag, self).__init__(*args, **kwargs)
+    def __init__(self, tag_name=None, self_closed=None, meta_name=None, meta_content=None, tag_value=None, *args, **kwargs):
+        super(ImageMetaTag, self).__init__(tag_name=tag_name, self_closed=self_closed, meta_name=meta_name, meta_content=meta_content, tag_value=tag_value)
+
         if 'value' in kwargs:
             if kwargs['value']:
                 if isinstance(kwargs['value'], InMemoryUploadedFile):
@@ -162,8 +164,9 @@ class KeywordsTag(BaseMetatag):
         else:
             return value
 
-    def __init__(self, *args, **kwargs):
-        super(KeywordsTag, self).__init__(*args, **kwargs)
+    def __init__(self, tag_name=None, self_closed=None, meta_name=None, meta_content=None, tag_value=None, *args, **kwargs):
+        super(KeywordsTag, self).__init__(tag_name=tag_name, self_closed=self_closed, meta_name=meta_name, meta_content=meta_content, tag_value=tag_value)
+
         if 'value' in kwargs:
             if kwargs['value'] and len(kwargs['value']) > 255:
                 self.meta_content = self._clean(kwargs['value'][:255])

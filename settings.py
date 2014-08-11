@@ -113,7 +113,7 @@ LOGGING = {
     }
 }
 
-TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
+# TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
 COVERAGE_BADGE_TYPE = 'drone.io'
 COVERAGE_CODE_EXCLUDES = [
     'def __unicode__\(self\):',
