@@ -54,7 +54,10 @@ class MetadataNode(template.Node):
             if metadata_html != "" and SEO_USE_CACHE:
                 cache.set(_build_prefix(context, view_name), metadata_html, SEO_CACHE_TIMEOUT)
 
-            return metadata_html
+            if metadata_html:
+                return metadata_html
+            else:
+                return ""
         except seo_model.DoesNotExist as exc:
             # Skipping error to avoid breaking the view
             log.debug("No metadata found for view %s" % view_name)
