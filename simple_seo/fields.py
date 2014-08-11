@@ -18,9 +18,9 @@ class BaseTagField(with_metaclass(models.SubfieldBase, models.CharField)):
     def get_prep_value(self, value):
         prep_value = self.to_python(value)
         if prep_value.self_closed:
-            return self.to_python(value).meta_content
+            return prep_value.meta_content
         else:
-            return self.to_python(value).tag_value
+            return prep_value.tag_value
 
     def db_type(self, connection):
         return 'VARCHAR(%s)' % self.max_length
@@ -35,9 +35,9 @@ class BaseURLTagField(with_metaclass(models.SubfieldBase, models.URLField)):
     def get_prep_value(self, value):
         prep_value = self.to_python(value)
         if prep_value.self_closed:
-            return self.to_python(value).meta_content
+            return prep_value.meta_content
         else:
-            return self.to_python(value).tag_value
+            return prep_value.tag_value
 
 
 class BaseImageTagField(with_metaclass(models.SubfieldBase, models.ImageField)):
@@ -49,9 +49,9 @@ class BaseImageTagField(with_metaclass(models.SubfieldBase, models.ImageField)):
     def get_prep_value(self, value):
         prep_value = self.to_python(value)
         if prep_value.self_closed:
-            return self.to_python(value).meta_content
+            return prep_value.meta_content
         else:
-            return self.to_python(value).tag_value
+            return prep_value.tag_value
 
     def pre_save(self, model_instance, add):
         "Returns field's value just before saving."
