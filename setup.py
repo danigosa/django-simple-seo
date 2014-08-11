@@ -10,7 +10,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-simple-seo',
-    version='0.2.4',
+    version='0.3.0',
     packages=['simple_seo', 'simple_seo.templatetags'],
     include_package_data=True,
     license='MIT License',  # example license

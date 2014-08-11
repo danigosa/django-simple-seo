@@ -1,5 +1,11 @@
 Changelog
 =========
+version 0.3.0
+-------------
+
+ * Bugfixes
+ * Added tests integrated with Selenium for proper HTML generation
+ * Added coverage
 
 version 0.2.4
 -------------

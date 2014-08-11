@@ -28,6 +28,7 @@ What's in django-simple-seo
  * Easily extendible as far as it's all about simple django models and fields
  * Out-of-the-box models for OpenGraph Facebook and Twitter tags
  * Support for UrlFields and ImageFields in admin
+ * Includes Selenium tests for proper HTML generation
  * Test app included (.testapp)
 
  .. image:: assets/simple_seo_admin.png
@@ -270,6 +271,11 @@ You can find more info of how to develop with remote vagrant servers and the awe
 
 Changelog
 =========
+
+**version 0.3.0**
+
+ * Bugfixes
+ * Added tests integrated with Selenium for proper HTML generation
 
 **version 0.2.4**
 
