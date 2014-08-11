@@ -41,7 +41,6 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.sessions',
     'django.contrib.admin',
-    'debug_toolbar',
     'simple_seo',
     'testapp'
 )
