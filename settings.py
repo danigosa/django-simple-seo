@@ -60,7 +60,7 @@ STATICFILES_DIRS = (
     PROJECT_PATH + '/media/',
 )
 
-ROOT_URLCONF = 'testapp.urls'
+ROOT_URLCONF = 'simple_seo.urls'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
@@ -113,17 +113,20 @@ LOGGING = {
     }
 }
 
-# TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
-COVERAGE_BADGE_TYPE = 'drone.io'
+# TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'
+TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
+# COVERAGE_BADGE_TYPE = 'drone.io'
 COVERAGE_CODE_EXCLUDES = [
     'def __unicode__\(self\):',
     'def get_absolute_url\(self\):',
     'from .* import .*', 'import .*',
     'simple_seo.admin',
+    'simple_seo.views',
+    'simple_seo.models',
     'simple_seo.__pycache__',
     'simple_seo.templatetags.__pycache__'
 ]
-COVERAGE_REPORT_HTML_OUTPUT_DIR = 'tests_html'
+# COVERAGE_REPORT_HTML_OUTPUT_DIR = 'tests_html'
 
 try:
     from local_settings import *

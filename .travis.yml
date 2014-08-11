@@ -1,0 +1,21 @@
+language: python
+
+python:
+  - 2.7
+  - 3.2
+  - 3.3
+  - 3.4
+
+env:
+  - DJANGO=1.4.13
+  - DJANGO=1.5.8
+  - DJANGO=1.6.5
+
+install:
+  - pip install Django==$DJANGO coveralls
+
+script:
+    coverage run -a --source=simple_seo manage.py test --traceback
+
+after_success:
+  - coveralls
