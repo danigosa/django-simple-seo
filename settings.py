@@ -113,7 +113,19 @@ LOGGING = {
     }
 }
 
-TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'
+TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
+COVERAGE_BADGE_TYPE = 'drone.io'
+COVERAGE_CODE_EXCLUDES = [
+    'def __unicode__\(self\):',
+    'def get_absolute_url\(self\):',
+    'from .* import .*', 'import .*',
+    'simple_seo.admin',
+    'simple_seo.views',
+    'simple_seo.models',
+    'simple_seo.__pycache__',
+    'simple_seo.templatetags.__pycache__'
+]
+COVERAGE_REPORT_HTML_OUTPUT_DIR = 'tests_html'
 
 try:
     from local_settings import *
