@@ -72,7 +72,7 @@ class TitleTag(BaseTag):
     """
 
     def __init__(self, *args, **kwargs):
-        super(TitleTag, self).__init__(*args, **kwargs)
+        super(TitleTag, self).__init__()
         self.tag_name = "title"
         self.self_closed = False
         if 'value' in kwargs:
@@ -94,7 +94,7 @@ class BaseMetatag(BaseTag):
     """
 
     def __init__(self, *args, **kwargs):
-        super(BaseMetatag, self).__init__(*args, **kwargs)
+        super(BaseMetatag, self).__init__()
         self.tag_name = 'meta'
         self.self_closed = True
         if 'name' in kwargs:

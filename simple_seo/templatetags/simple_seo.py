@@ -57,7 +57,7 @@ class MetadataNode(template.Node):
             return metadata_html
         except seo_model.DoesNotExist as exc:
             # Skipping error to avoid breaking the view
-            log.exception("No metadata found for view %s" % view_name)
+            log.debug("No metadata found for view %s" % view_name)
 
 
 @register.tag
