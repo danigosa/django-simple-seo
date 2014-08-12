@@ -5,6 +5,8 @@ Simple Seo Backend for Django
 .. image:: https://drone.io/github.com/danigosa/django-simple-seo/status.png
    :target: https://drone.io/github.com/danigosa/django-simple-seo/latest
 
+.. image:: https://drone.io/github.com/danigosa/django-simple-seo/files/tests_html/coverage_status.png
+
 .. image:: https://img.shields.io/pypi/v/django-simple-seo.svg?style=flat
     :target: https://pypi.python.org/pypi/django-simple-seo
 
