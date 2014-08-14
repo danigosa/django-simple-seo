@@ -120,7 +120,7 @@ class MetaTagField(with_metaclass(models.SubfieldBase, BaseTagField)):
         if isinstance(value, MetaTag):
             return value
         content = super(MetaTagField, self).to_python(value)
-        meta_tag = MetaTag(meta_name=self.name, **{'name': _clean_i18_name(self.name), 'value': content})
+        meta_tag = MetaTag(meta_name=_clean_i18_name(self.name), **{'name': _clean_i18_name(self.name), 'value': content})
         return meta_tag
 
 
@@ -140,7 +140,7 @@ class URLMetaTagField(with_metaclass(models.SubfieldBase, BaseURLTagField)):
         if isinstance(value, MetaTag):
             return value
         content = super(URLMetaTagField, self).to_python(value)
-        meta_tag = MetaTag(meta_name=self.name, **{'name': _clean_i18_name(self.name), 'value': content})
+        meta_tag = MetaTag(meta_name=_clean_i18_name(self.name), **{'name': _clean_i18_name(self.name), 'value': content})
         return meta_tag
 
 
@@ -160,7 +160,7 @@ class ImageMetaTagField(with_metaclass(models.SubfieldBase, BaseImageTagField)):
         if isinstance(value, ImageMetaTag):
             return value
         content = super(ImageMetaTagField, self).to_python(value)
-        image_meta_tag = ImageMetaTag(meta_name=self.name,
+        image_meta_tag = ImageMetaTag(meta_name=_clean_i18_name(self.name),
                                       **{'name': _clean_i18_name(self.name), 'value': content, 'path': self.upload_to})
         return image_meta_tag
 
@@ -184,5 +184,5 @@ class KeywordsTagField(with_metaclass(models.SubfieldBase, BaseTagField)):
         if isinstance(value, KeywordsTag):
             return value
         keywords = super(KeywordsTagField, self).to_python(value)
-        keyword_tag = KeywordsTag(meta_name=self.name, **{'name': _clean_i18_name(self.name), 'value': keywords})
+        keyword_tag = KeywordsTag(meta_name=_clean_i18_name(self.name), **{'name': _clean_i18_name(self.name), 'value': keywords})
         return keyword_tag
