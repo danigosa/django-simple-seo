@@ -272,6 +272,10 @@ You can find more info of how to develop with remote vagrant servers and the awe
 Changelog
 =========
 
+**version 0.4.0**
+
+ * Support for modeltranslation and linguo i18n backends
+
 **version 0.3.2**
 
  * Bugfixes in __str__ and __len__ when fields have NULL value in database
