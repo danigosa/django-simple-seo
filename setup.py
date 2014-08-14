@@ -16,7 +16,7 @@ setup(
     license='MIT License',  # example license
     description='Simple SEO Module for Django',
     long_description=README,
-    url='http://codeispoetry.me/',
+    url='https://github.com/danigosa/django-simple-seo',
     author='danigosa',
     author_email='danigosa@gmail.com',
     install_requires=[
