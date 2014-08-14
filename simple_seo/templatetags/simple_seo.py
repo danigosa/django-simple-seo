@@ -2,6 +2,7 @@ from django import template
 from django.core.urlresolvers import resolve
 from django.core.cache import cache
 from django.utils import translation
+from django.conf import settings
 import logging
 
 from .. import SEO_CACHE_PREFIX, SEO_CACHE_TIMEOUT, SEO_USE_CACHE, get_model_for_view
@@ -23,6 +24,16 @@ def _build_prefix(context, view_name):
     lang = translation.get_language()
     return SEO_CACHE_PREFIX + ':' + view_name + ':' + lang + ':' + context['request'].path
 
+
+def _check_field_i18n(field):
+    """
+    Avoid fields that has _XX lang prefix
+    """
+    for lang in settings.LANGUAGES:
+        if lang[0] in field.name:
+            return True
+
+    return False
 
 class MetadataNode(template.Node):
     """
@@ -47,7 +58,7 @@ class MetadataNode(template.Node):
             metadata = seo_model.objects.get(view_name=view_name)
             metadata_html = ""
             for field in metadata._meta.fields:
-                if isinstance(field,
+                if not _check_field_i18n(field) and isinstance(field,
                               (TitleTagField, MetaTagField, KeywordsTagField, URLMetaTagField, ImageMetaTagField)):
                     printed_tag = field.to_python(getattr(metadata, field.name)).print_tag()
                     if printed_tag and printed_tag != "":
