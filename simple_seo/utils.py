@@ -34,7 +34,7 @@ def _load_patterns(views, patterns, namespace=None):
         if isinstance(pattern, RegexURLPattern):
             _load_pattern(views, pattern, namespace)
         elif isinstance(pattern, RegexURLResolver):
-            if namespace and hasattr(pattern, 'namespace'):
+            if namespace and hasattr(pattern, 'namespace') and getattr(pattern, 'namespace'):
                 namespace += ':' + pattern.namespace
             elif hasattr(pattern, 'namespace'):
                 namespace = pattern.namespace
