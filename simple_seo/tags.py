@@ -92,6 +92,8 @@ class TitleTag(BaseTag):
         return self.tag_value
 
     def __len__(self):
+        if self.tag_value is None:
+            return 0
         return len(self.tag_value)
 
 
@@ -116,6 +118,8 @@ class BaseMetatag(BaseTag):
         return self.meta_content
 
     def __len__(self):
+        if self.meta_content is None:
+            return 0
         return len(self.meta_content)
 
 
