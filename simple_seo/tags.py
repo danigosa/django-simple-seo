@@ -57,8 +57,12 @@ class BaseTag(object):
 
     def __str__(self):
         if self.self_closed:
+            if self.meta_content is None:
+                return ''
             return self.meta_content
         else:
+            if self.tag_value is None:
+                return ''
             return self.tag_value
 
     def __len__(self):
@@ -83,6 +87,8 @@ class TitleTag(BaseTag):
                 self.tag_value = kwargs['value']
 
     def __str__(self):
+        if self.tag_value is None:
+            return ''
         return self.tag_value
 
     def __len__(self):
@@ -104,10 +110,9 @@ class BaseMetatag(BaseTag):
         if 'name' in kwargs:
             self.meta_name = kwargs['name']
 
-    def __unicode__(self):
-        return self.meta_content
-
     def __str__(self):
+        if self.meta_content is None:
+            return ''
         return self.meta_content
 
     def __len__(self):
@@ -159,7 +164,9 @@ class ImageMetaTag(BaseMetatag):
         return self.meta_content
 
     def __str__(self):
-        return str(self.meta_content)
+        if self.meta_content is None:
+            return ''
+        return self.meta_content
 
 
 class KeywordsTag(BaseMetatag):
