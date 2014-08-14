@@ -11,18 +11,18 @@ from simple_seo.tags import (
 )
 
 
-def _clean_i18_name(field):
+def _clean_i18_name(field_name):
     """
     Cleans i18 suffix in case it exists
     """
-    if field.name and len(field.name) > 3:
-        suffix = field.name[-3:]
+    if field_name and len(field_name) > 3:
+        suffix = field_name[-3:]
         if suffix.startswith('_'):
             lang = suffix[-2:]
             for l in getattr(settings, 'LANGUAGES', []):
                 if l[0] == lang:
                     # It's a language suffix. Remove it
-                    field.name = field.name[:-3]
+                    return field_name[:-3]
 
 
 class BaseTagField(with_metaclass(models.SubfieldBase, models.CharField)):
