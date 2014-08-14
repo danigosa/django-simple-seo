@@ -81,7 +81,8 @@ class TitleTag(BaseTag):
         self.tag_name = "title"
         self.self_closed = False
         if 'value' in kwargs:
-            if len(kwargs['value']) > 68:
+
+            if kwargs['value'] and len(kwargs['value']) > 68:
                 self.tag_value = kwargs['value'][:68]
             else:
                 self.tag_value = kwargs['value']
