@@ -6,6 +6,7 @@ from django.conf import settings
 import logging
 
 from .. import SEO_CACHE_PREFIX, SEO_CACHE_TIMEOUT, SEO_USE_CACHE, get_model_for_view
+
 from ..fields import (
     TitleTagField,
     MetaTagField,
@@ -29,11 +30,14 @@ def _check_field_i18n(field):
     """
     Avoid fields that has _XX lang prefix
     """
+    if not getattr(settings, 'LANGUAGES', None) or field is None:
+        return False
     for lang in settings.LANGUAGES:
-        if lang[0] in field.name:
+        if '_'+lang[0] in field.name:
             return True
 
     return False
+
 
 class MetadataNode(template.Node):
     """
@@ -59,7 +63,8 @@ class MetadataNode(template.Node):
             metadata_html = ""
             for field in metadata._meta.fields:
                 if not _check_field_i18n(field) and isinstance(field,
-                              (TitleTagField, MetaTagField, KeywordsTagField, URLMetaTagField, ImageMetaTagField)):
+                                                               (TitleTagField, MetaTagField, KeywordsTagField,
+                                                                URLMetaTagField, ImageMetaTagField)):
                     printed_tag = field.to_python(getattr(metadata, field.name)).print_tag()
                     if printed_tag and printed_tag != "":
                         metadata_html += printed_tag + "\n"
