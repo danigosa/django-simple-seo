@@ -45,9 +45,9 @@ INSTALLED_APPS = (
     'testapp'
 )
 
-SEO_USE_CACHE = True
+SEO_USE_CACHE = False
 SEO_MODEL_REGISTRY = (
-    ('testapp.MyMetadata', ('template_test', )),
+    ('simple_seo.TestMetadata', ('template_test', )),
 )
 
 STATIC_URL = '/static/'

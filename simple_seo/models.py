@@ -13,6 +13,7 @@ def _post_init_field_populate(sender, instance, *args, **kwargs):
     """
     Must populate the fields with 'populate_from' value
     Only populates if destination field has empty values
+    Saves values, so every populating are only save to database once (first time)
     """
     for field in instance._meta.fields:
         _populate_from_name = getattr(field, 'populate_from', None)
@@ -32,15 +33,18 @@ def _post_init_field_populate(sender, instance, *args, **kwargs):
                     if destination_tag.meta_content is None or destination_tag.meta_content == '':
                         if destination_tag.self_closed and _populate_from_tag.self_closed:
                             destination_tag.meta_content = _populate_from_tag.meta_content
+                            setattr(instance, field.name, destination_tag)
+                            instance.save()
                         if destination_tag.self_closed and not _populate_from_tag.self_closed:
                             destination_tag.meta_content = _populate_from_tag.tag_value
+                            setattr(instance, field.name, destination_tag)
+                            instance.save()
 
                     if destination_tag.tag_value is None or destination_tag.tag_value == '':
                         if not destination_tag.self_closed and not _populate_from_tag.self_closed:
                             destination_tag.tag_value = _populate_from_tag.tag_value
-                    # Persists the value. It's not going to enter here anymore
-                    setattr(instance, field.name, destination_tag)
-                    instance.save()
+                            setattr(instance, field.name, destination_tag)
+                            instance.save()
 
 
 class BaseMetadata(models.Model):
