@@ -4,7 +4,7 @@ from django.core.cache import cache
 from django.utils import translation
 from django.conf import settings
 import logging
-from simple_seo import get_class_for_view
+from ..import get_class_for_view
 
 from simple_seo.settings import (
     SEO_CACHE_PREFIX,
