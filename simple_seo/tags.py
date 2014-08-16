@@ -170,7 +170,7 @@ class ImageMetaTag(BaseMetatag):
                     if isinstance(rel_path, FieldFile):
                         self.meta_content = staticfiles_storage.url(rel_path.name)
                     else:
-                        self.meta_content = staticfiles_storage.url(rel_path)
+                        self.meta_content = rel_path
                 else:
                     if isinstance(rel_path, FieldFile):
                         self.meta_content = rel_path.name
