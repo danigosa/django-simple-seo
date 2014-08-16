@@ -45,6 +45,11 @@ INSTALLED_APPS = (
     'testapp'
 )
 
+SEO_USE_CACHE = True
+SEO_MODEL_REGISTRY = (
+    ('testapp.MyMetadata', ('template_test', )),
+)
+
 STATIC_URL = '/static/'
 STATIC_ROOT = PROJECT_PATH + STATIC_URL
 MEDIA_URL = '/media/'

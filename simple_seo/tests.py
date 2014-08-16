@@ -1,10 +1,9 @@
 from django.test import TestCase
 from selenium.webdriver.firefox.webdriver import WebDriver as FirefoxDriver
 from django.test.testcases import LiveServerTestCase
+from simple_seo.models import TestMetadata
 
-from simple_seo.models import OpenGraphMetadata
 from simple_seo.tags import TitleTag, MetaTag, KeywordsTag, BaseTag
-from testapp.models import MyMetadata
 
 
 class TagPrintingTest(TestCase):
@@ -39,17 +38,23 @@ class FieldPrintingTest(LiveServerTestCase):
     """
 
     def setUp(self):
-        self.mymetadata = MyMetadata()
+        self.mymetadata = TestMetadata()
         self.mymetadata.view_name = 'template_test'
         self.mymetadata.title = TitleTag(tag_value='Title Test')
         self.mymetadata.author = MetaTag(meta_name='author', meta_content='Test Author')
         self.mymetadata.description = MetaTag(meta_name='description', meta_content='Test Description')
         self.mymetadata.keywords = KeywordsTag(meta_name='keywords', meta_content='test, author')
-        self.mymetadata.og_title = MetaTag(meta_name='og_title')
-        self.mymetadata.save()
+        # Attr name and class attribute name are not equals, let's do it by setattr
+        setattr(self.mymetadata, 'og:title', MetaTag(meta_name='og:title'))
+        setattr(self.mymetadata, 'twitter:title', MetaTag(meta_name='twitter:title'))
+        setattr(self.mymetadata, 'og:description', MetaTag(meta_name='og:description'))
+        setattr(self.mymetadata, 'twitter:description', MetaTag(meta_name='twitter:description'))
+        setattr(self.mymetadata, 'og:url', MetaTag(meta_name='og:url', meta_content='http://infantium.com'))
+        setattr(self.mymetadata, 'twitter:url', MetaTag(meta_name='twitter:url'))
+        setattr(self.mymetadata, 'og:type', MetaTag(meta_name='og:type', meta_content='type'))
+        setattr(self.mymetadata, 'twitter:card', MetaTag(meta_name='twitter:card', meta_content='card'))
 
-        # Test post_init when creating a OpenGraph object
-        self.opengraph = OpenGraphMetadata()
+        self.mymetadata.save()
 
         self.firefox = FirefoxDriver()
 
@@ -64,12 +69,36 @@ class FieldPrintingTest(LiveServerTestCase):
 
     def test_metatags_rendering(self):
         self.firefox.get('%s%s' % (self.live_server_url, '/test/'))
+
         author_element = self.firefox.find_element_by_xpath('/html/head/meta[@name=\'author\']')
         self.assertIsNotNone(author_element)
         self.assertEqual(author_element.get_attribute('content'), 'Test Author')
+
         description_element = self.firefox.find_element_by_xpath('/html/head/meta[@name=\'description\']')
         self.assertIsNotNone(description_element)
         self.assertEqual(description_element.get_attribute('content'), 'Test Description')
+
         keywords_element = self.firefox.find_element_by_xpath('/html/head/meta[@name=\'keywords\']')
         self.assertIsNotNone(keywords_element)
         self.assertEqual(keywords_element.get_attribute('content'), 'test, author')
+
+        og_title_element = self.firefox.find_element_by_xpath('/html/head/meta[@name=\'og:title\']')
+        self.assertIsNotNone(og_title_element)
+        self.assertEqual(og_title_element.get_attribute('content'), self.firefox.title)  # Should be equal to titleTag
+        twitter_title_element = self.firefox.find_element_by_xpath('/html/head/meta[@name=\'twitter:title\']')
+        self.assertIsNotNone(twitter_title_element)
+        self.assertEqual(twitter_title_element.get_attribute('content'), og_title_element.get_attribute('content'))
+
+        og_description_element = self.firefox.find_element_by_xpath('/html/head/meta[@name=\'og:description\']')
+        self.assertIsNotNone(og_description_element)
+        self.assertEqual(og_description_element.get_attribute('content'), description_element.get_attribute('content'))
+        twitter_description_element = self.firefox.find_element_by_xpath('/html/head/meta[@name=\'twitter:description\']')
+        self.assertIsNotNone(twitter_description_element)
+        self.assertEqual(twitter_description_element.get_attribute('content'), og_description_element.get_attribute('content'))
+
+        og_url_element = self.firefox.find_element_by_xpath('/html/head/meta[@name=\'og:url\']')
+        self.assertIsNotNone(og_url_element)
+        self.assertEqual(og_url_element.get_attribute('content'), 'http://infantium.com')
+        twitter_url_element = self.firefox.find_element_by_xpath('/html/head/meta[@name=\'twitter:url\']')
+        self.assertIsNotNone(twitter_url_element)
+        self.assertEqual(twitter_url_element.get_attribute('content'), og_url_element.get_attribute('content'))

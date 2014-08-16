@@ -62,9 +62,9 @@ class MetadataNode(template.Node):
             metadata = seo_model.objects.get(view_name=view_name)
             metadata_html = ""
             for field in metadata._meta.fields:
-                if not self._check_field_i18n(field) and isinstance(field,
-                                                               (TitleTagField, MetaTagField, KeywordsTagField,
-                                                                URLMetaTagField, ImageMetaTagField)):
+                if not self._check_field_i18n(field) and isinstance(
+                        field,
+                        (TitleTagField, MetaTagField, KeywordsTagField, URLMetaTagField, ImageMetaTagField)):
                     printed_tag = field.to_python(getattr(metadata, field.name)).print_tag()
                     if printed_tag and printed_tag != "":
                         metadata_html += printed_tag + "\n"
