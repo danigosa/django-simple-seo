@@ -168,12 +168,12 @@ class ImageMetaTag(BaseMetatag):
                     rel_path = kwargs['value']
                 if staticfiles_storage:
                     if isinstance(rel_path, FieldFile):
-                        self.meta_content = staticfiles_storage.url(rel_path.path)
+                        self.meta_content = staticfiles_storage.url(rel_path.name)
                     else:
                         self.meta_content = staticfiles_storage.url(rel_path)
                 else:
                     if isinstance(rel_path, FieldFile):
-                        self.meta_content = rel_path.path
+                        self.meta_content = rel_path.name
                     else:
                         self.meta_content = rel_path
 
