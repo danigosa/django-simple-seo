@@ -11,25 +11,26 @@ from simple_seo.tags import (
 )
 
 
-def _clean_i18_name(field_name):
-    """
-    Cleans i18 suffix in case it exists
-    """
-    if field_name and len(field_name) > 3:
-        suffix = field_name[-3:]
-        if suffix.startswith('_'):
-            lang = suffix[-2:]
-            for l in getattr(settings, 'LANGUAGES', []):
-                if l[0] == lang:
-                    # It's a language suffix. Remove it
-                    return field_name[:-3]
-
-
 class BaseTagField(with_metaclass(models.SubfieldBase, models.CharField)):
     """
     Base Meta Tag behaviour
     """
     description = "A hand of cards (bridge style)"
+
+    @staticmethod
+    def _clean_i18_name(field_name):
+        """
+        Cleans i18 suffix in case it exists
+        """
+        if field_name and len(field_name) > 3:
+            suffix = field_name[-3:]
+            if suffix.startswith('_'):
+                lang = suffix[-2:]
+                for l in getattr(settings, 'LANGUAGES', []):
+                    if l[0] == lang:
+                        # It's a language suffix. Remove it
+                        return field_name[:-3]
+        return field_name
 
     def get_prep_value(self, value):
         prep_value = self.to_python(value)
@@ -120,7 +121,13 @@ class MetaTagField(with_metaclass(models.SubfieldBase, BaseTagField)):
         if isinstance(value, MetaTag):
             return value
         content = super(MetaTagField, self).to_python(value)
-        meta_tag = MetaTag(meta_name=_clean_i18_name(self.name), **{'name': _clean_i18_name(self.name), 'value': content})
+        meta_tag = MetaTag(
+            meta_name=self._clean_i18_name(self.name),
+            **{
+                'name': self._clean_i18_name(self.name),
+                'value': content
+            }
+        )
         return meta_tag
 
 
@@ -140,7 +147,13 @@ class URLMetaTagField(with_metaclass(models.SubfieldBase, BaseURLTagField)):
         if isinstance(value, MetaTag):
             return value
         content = super(URLMetaTagField, self).to_python(value)
-        meta_tag = MetaTag(meta_name=_clean_i18_name(self.name), **{'name': _clean_i18_name(self.name), 'value': content})
+        meta_tag = MetaTag(
+            meta_name=self._clean_i18_name(self.name),
+            **{
+                'name': self._clean_i18_name(self.name),
+                'value': content
+            }
+        )
         return meta_tag
 
 
@@ -160,8 +173,14 @@ class ImageMetaTagField(with_metaclass(models.SubfieldBase, BaseImageTagField)):
         if isinstance(value, ImageMetaTag):
             return value
         content = super(ImageMetaTagField, self).to_python(value)
-        image_meta_tag = ImageMetaTag(meta_name=_clean_i18_name(self.name),
-                                      **{'name': _clean_i18_name(self.name), 'value': content, 'path': self.upload_to})
+        image_meta_tag = ImageMetaTag(
+            meta_name=self._clean_i18_name(self.name),
+            **{
+                'name': self._clean_i18_name(self.name),
+                'value': content,
+                'path': self.upload_to
+            }
+        )
         return image_meta_tag
 
 
@@ -184,5 +203,11 @@ class KeywordsTagField(with_metaclass(models.SubfieldBase, BaseTagField)):
         if isinstance(value, KeywordsTag):
             return value
         keywords = super(KeywordsTagField, self).to_python(value)
-        keyword_tag = KeywordsTag(meta_name=_clean_i18_name(self.name), **{'name': _clean_i18_name(self.name), 'value': keywords})
+        keyword_tag = KeywordsTag(
+            meta_name=self._clean_i18_name(self.name),
+            **{
+                'name': self._clean_i18_name(self.name),
+                'value': keywords
+            }
+        )
         return keyword_tag
