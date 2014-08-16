@@ -15,7 +15,13 @@ class BaseTag(object):
     meta_content = ""
     tag_value = ""
 
-    def __init__(self, tag_name=None, self_closed=None, meta_name=None, meta_content=None, tag_value=None):
+    def __init__(
+            self,
+            tag_name=None,
+            self_closed=None,
+            meta_name=None,
+            meta_content=None,
+            tag_value=None):
         """
         Explicit Initialization of Tag
         :param tag_name:

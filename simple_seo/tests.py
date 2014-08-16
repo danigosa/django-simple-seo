@@ -2,8 +2,9 @@ from django.test import TestCase
 from selenium.webdriver.firefox.webdriver import WebDriver as FirefoxDriver
 from django.test.testcases import LiveServerTestCase
 
-from testapp.models import MyMetadata
+from simple_seo.models import OpenGraphMetadata
 from simple_seo.tags import TitleTag, MetaTag, KeywordsTag, BaseTag
+from testapp.models import MyMetadata
 
 
 class TagPrintingTest(TestCase):
@@ -44,7 +45,11 @@ class FieldPrintingTest(LiveServerTestCase):
         self.mymetadata.author = MetaTag(meta_name='author', meta_content='Test Author')
         self.mymetadata.description = MetaTag(meta_name='description', meta_content='Test Description')
         self.mymetadata.keywords = KeywordsTag(meta_name='keywords', meta_content='test, author')
+        self.mymetadata.og_title = MetaTag(meta_name='og_title')
         self.mymetadata.save()
+
+        # Test post_init when creating a OpenGraph object
+        self.opengraph = OpenGraphMetadata()
 
         self.firefox = FirefoxDriver()
 

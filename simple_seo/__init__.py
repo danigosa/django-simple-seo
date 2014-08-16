@@ -3,7 +3,6 @@ Load settings
 """
 from django.conf import settings
 from django.utils.six import iteritems
-
 from simple_seo.models import BaseMetadata
 
 
@@ -38,7 +37,7 @@ def register(model, views=None):
     )
 
 
-def get_model_for_view(view):
+def get_class_for_view(view):
     """
     Given a view name, give a valid seo model. It's gonna be the first model who contains the view name or has
      all-views scope
@@ -57,3 +56,21 @@ def get_model_for_view(view):
             elif isinstance(value, str) and value == 'ALL':
                 return key
     raise ValueError("No model has been found for view with name %s. Have you registered one?" % view)
+
+
+def get_classes_for_population(klass):
+    """
+    Returns equivalent class to the given class within the registry
+    :param klass:
+    :return:
+    """
+    if not klass:
+        raise ValueError("Klass must have value")
+
+    global _simple_seo_registry
+    for registry_dict in _simple_seo_registry:
+        for key, value in iteritems(registry_dict):
+            if isinstance(key, klass):
+                yield key
+            if issubclass(key, klass):
+                yield key

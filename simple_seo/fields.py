@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models.fields.files import FileField, FieldFile
 from django.utils.six import with_metaclass
 from django.conf import settings
+from django.db.models import signals
+# from .__init__ import get_classes_for_population as _get_classes_for_population
 
 from simple_seo.tags import (
     ImageMetaTag,
@@ -26,11 +28,28 @@ def _clean_i18_name(field_name):
     return field_name
 
 
+def _post_init_field_populate(sender, instance, *args, **kwargs):
+    pass
+
+
 class BaseTagField(with_metaclass(models.SubfieldBase, models.CharField)):
     """
     Base Meta Tag behaviour
     """
     description = "A hand of cards (bridge style)"
+    populate_from = None  # Field to populate values from
+
+    def __init__(self, populate_from=None, *args, **kwargs):
+        super(BaseTagField, self).__init__(*args, **kwargs)
+        if populate_from:
+            self.populate_from = populate_from
+
+    def contribute_to_class(self, cls, name, virtual_only=False):
+        super(BaseTagField, self).contribute_to_class(cls, name)
+        if self.populate_from:
+            pass
+            # for k in _get_classes_for_population(cls):
+            #     signals.post_init.connect(_post_init_field_populate, sender=k)
 
     def get_prep_value(self, value):
         prep_value = self.to_python(value)
@@ -48,6 +67,7 @@ class BaseURLTagField(with_metaclass(models.SubfieldBase, models.URLField)):
     Base URL Meta Tag behaviour
     """
     description = "A hand of cards (bridge style)"
+    populate_from = None  # Field to populate values from
 
     def get_prep_value(self, value):
         prep_value = self.to_python(value)
@@ -62,6 +82,7 @@ class BaseImageTagField(with_metaclass(models.SubfieldBase, models.ImageField)):
     Base Image Meta Tag behaviour
     """
     description = "A hand of cards (bridge style)"
+    populate_from = None  # Field to populate values from
 
     def get_prep_value(self, value):
         prep_value = self.to_python(value)
@@ -110,12 +131,12 @@ class MetaTagField(with_metaclass(models.SubfieldBase, BaseTagField)):
     """
     description = "Field for Storing <meta /> tag"
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, populate_from=None, *args, **kwargs):
         kwargs['blank'] = True
         kwargs['db_index'] = False
         kwargs['null'] = True
         kwargs['max_length'] = 255
-        super(MetaTagField, self).__init__(*args, **kwargs)
+        super(MetaTagField, self).__init__(populate_from=populate_from, *args, **kwargs)
 
     def to_python(self, value):
         if isinstance(value, MetaTag):
@@ -125,7 +146,7 @@ class MetaTagField(with_metaclass(models.SubfieldBase, BaseTagField)):
             meta_name=_clean_i18_name(self.name),
             **{
                 'name': _clean_i18_name(self.name),
-                'value': content
+                'value': content,
             }
         )
         return meta_tag

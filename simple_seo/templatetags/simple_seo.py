@@ -5,9 +5,9 @@ from django.utils import translation
 from django.conf import settings
 import logging
 
-from .. import SEO_CACHE_PREFIX, SEO_CACHE_TIMEOUT, SEO_USE_CACHE, get_model_for_view
+from simple_seo import SEO_CACHE_PREFIX, SEO_CACHE_TIMEOUT, SEO_USE_CACHE, get_class_for_view as _get_class_for_view
 
-from ..fields import (
+from simple_seo.fields import (
     TitleTagField,
     MetaTagField,
     KeywordsTagField,
@@ -57,7 +57,7 @@ class MetadataNode(template.Node):
                 log.debug("Cache metadata hit for view %s" % view_name)
                 return metadata_html
 
-        seo_model = get_model_for_view(view_name)
+        seo_model = _get_class_for_view(view_name)
         try:
             metadata = seo_model.objects.get(view_name=view_name)
             metadata_html = ""

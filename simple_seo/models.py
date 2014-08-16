@@ -1,5 +1,6 @@
 from django.db import models
-from .fields import (
+
+from simple_seo.fields import (
     TitleTagField,
     KeywordsTagField,
     MetaTagField,
@@ -26,7 +27,7 @@ class OpenGraphMetadata(BaseMetadata):
     """
     Abstract Base Metadata Class with Open Graph Tags
     """
-    og_title = MetaTagField(name='og:title', max_length=95, null=True, blank=True)
+    og_title = MetaTagField(name='og:title', max_length=95, null=True, blank=True, populate_from='title')
     og_type = MetaTagField(name='og:type', max_length=15, null=True, blank=True)
     og_image = ImageMetaTagField(name='og:image', upload_to='seo/images/', null=True, blank=True)
     og_url = URLMetaTagField(name='og:url', null=True, blank=True)
@@ -63,17 +64,19 @@ class AllMetadata(OpenGraphMetadata):
     class Meta:
         abstract = False
 
+
 try:
     # In case South is installed
     from south.modelsinspector import add_introspection_rules
+
     add_introspection_rules(
         [],
-        [
-            "^simple_seo\.fields\.TitleTagField",
-            "^simple_seo\.fields\.MetaTagField",
-            "^simple_seo\.fields\.URLMetaTagField",
-            "^simple_seo\.fields\.ImageMetaTagField",
-            "^simple_seo\.fields\.KeywordsTagField",
-        ])
+          [
+              "^simple_seo\.fields\.TitleTagField",
+              "^simple_seo\.fields\.MetaTagField",
+              "^simple_seo\.fields\.URLMetaTagField",
+              "^simple_seo\.fields\.ImageMetaTagField",
+              "^simple_seo\.fields\.KeywordsTagField",
+          ])
 except ImportError:
     pass
