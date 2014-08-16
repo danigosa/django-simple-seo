@@ -1,18 +1,9 @@
-from __future__ import print_function
-from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.db.models.loading import get_model
 from django.utils.six import iteritems
 
-SEO_MODEL_REGISTRY = getattr(settings, 'SEO_MODEL_REGISTRY', None)
-if SEO_MODEL_REGISTRY is None:
-    raise ImproperlyConfigured(
-        "You must define SEO_MODEL_REGISTRY setting. Look at the documentation here http://bit.ly/1pmE8vU"
-    )
+from settings import SEO_MODEL_REGISTRY
 
-SEO_CACHE_PREFIX = getattr(settings, 'SEO_CACHE_PREFIX', 'simple_seo:')
-SEO_CACHE_TIMEOUT = getattr(settings, 'SEO_CACHE_PREFIX', 60 * 60 * 24)
-SEO_USE_CACHE = getattr(settings, 'SEO_USE_CACHE', False)
 
 _simple_seo_registry = []
 
@@ -69,19 +60,6 @@ def get_class_for_view(view):
             elif isinstance(value, str) and value == 'ALL':
                 return _get_class_from_name(key)
     raise ValueError("No model has been found for view with name %s. Have you registered one?" % view)
-
-
-def get_classes_for_population():
-    """
-    Returns classes within the registry
-    :return:
-    """
-    global _simple_seo_registry
-    print(_simple_seo_registry)
-    for registry_dict in _simple_seo_registry:
-        for key, value in iteritems(registry_dict):
-            model_klass = _get_class_from_name(key)
-            yield model_klass
 
 
 try:
