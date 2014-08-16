@@ -21,24 +21,6 @@ log = logging.getLogger(__name__)
 register = template.Library()
 
 
-def _build_prefix(context, view_name):
-    lang = translation.get_language()
-    return SEO_CACHE_PREFIX + ':' + view_name + ':' + lang + ':' + context['request'].path
-
-
-def _check_field_i18n(field):
-    """
-    Avoid fields that has _XX lang prefix
-    """
-    if not getattr(settings, 'LANGUAGES', None) or field is None:
-        return False
-    for lang in settings.LANGUAGES:
-        if '_'+lang[0] in field.name:
-            return True
-
-    return False
-
-
 class MetadataNode(template.Node):
     """
     Template Tag node for Metadata
@@ -47,12 +29,30 @@ class MetadataNode(template.Node):
     * print each supported field
     """
 
+    @staticmethod
+    def _build_prefix(context, view_name):
+        lang = translation.get_language()
+        return SEO_CACHE_PREFIX + ':' + view_name + ':' + lang + ':' + context['request'].path
+
+    @staticmethod
+    def _check_field_i18n(field):
+        """
+        Avoid fields that has _XX lang prefix
+        """
+        if not getattr(settings, 'USE_I18N', None) or field is None:
+            return False
+        for lang in settings.LANGUAGES:
+            if '_'+lang[0] in field.name:
+                return True
+
+        return False
+
     def render(self, context):
         view_name = resolve(context['request'].path).url_name  # resolve view name
 
         # Check if metadata is in cache
         if SEO_USE_CACHE:
-            metadata_html = cache.get(_build_prefix(context, view_name))
+            metadata_html = cache.get(self._build_prefix(context, view_name))
             if metadata_html:
                 log.debug("Cache metadata hit for view %s" % view_name)
                 return metadata_html
@@ -62,7 +62,7 @@ class MetadataNode(template.Node):
             metadata = seo_model.objects.get(view_name=view_name)
             metadata_html = ""
             for field in metadata._meta.fields:
-                if not _check_field_i18n(field) and isinstance(field,
+                if not self._check_field_i18n(field) and isinstance(field,
                                                                (TitleTagField, MetaTagField, KeywordsTagField,
                                                                 URLMetaTagField, ImageMetaTagField)):
                     printed_tag = field.to_python(getattr(metadata, field.name)).print_tag()
@@ -71,7 +71,7 @@ class MetadataNode(template.Node):
                 else:
                     pass
             if metadata_html != "" and SEO_USE_CACHE:
-                cache.set(_build_prefix(context, view_name), metadata_html, SEO_CACHE_TIMEOUT)
+                cache.set(self._build_prefix(context, view_name), metadata_html, SEO_CACHE_TIMEOUT)
 
             if metadata_html:
                 return metadata_html

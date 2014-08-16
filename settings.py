@@ -26,7 +26,7 @@ SECRET_KEY = '__secret__'
 TIME_ZONE = 'America/Chicago'
 LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
-USE_I18N = True
+USE_I18N = False
 
 CACHES = {
     'default': {

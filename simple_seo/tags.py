@@ -179,7 +179,8 @@ class KeywordsTag(BaseMetatag):
     Keywords Meta Tag class
     """
 
-    def _clean(self, value):
+    @staticmethod
+    def _clean(value):
         if value:
             return value.replace('"', '&#34;').replace("\n", ", ").strip()
         else:
