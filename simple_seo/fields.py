@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.fields.files import FileField, FieldFile
 from django.utils.six import with_metaclass
@@ -155,6 +156,16 @@ class URLMetaTagField(with_metaclass(models.SubfieldBase, BaseURLTagField)):
         kwargs['db_index'] = False
         kwargs['null'] = True
         super(URLMetaTagField, self).__init__(populate_from=populate_from, *args, **kwargs)
+
+    def clean(self, value, model_instance):
+        """
+        Patch clean to permit having URLFields with blank=true
+        """
+        try:
+            super(URLMetaTagField, self).clean(value, model_instance)
+        except ValidationError as ex:
+            if not self.blank:
+                raise ex
 
     def to_python(self, value):
         if isinstance(value, MetaTag):
