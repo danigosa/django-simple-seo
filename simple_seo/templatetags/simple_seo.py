@@ -6,13 +6,13 @@ from django.conf import settings
 import logging
 from ..import get_class_for_view
 
-from simple_seo.settings import (
+from ..settings import (
     SEO_CACHE_PREFIX,
     SEO_CACHE_TIMEOUT,
     SEO_USE_CACHE,
 )
 
-from simple_seo.fields import (
+from ..fields import (
     TitleTagField,
     MetaTagField,
     KeywordsTagField,
