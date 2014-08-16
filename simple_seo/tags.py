@@ -166,7 +166,7 @@ class ImageMetaTag(BaseMetatag):
                     self._inmemoryuploadedfile = None
                     rel_path = kwargs['value']
                 if staticfiles_storage:
-                    self.meta_content = staticfiles_storage.url(rel_path)
+                    self.meta_content = staticfiles_storage.url(rel_path.path)
                 else:
                     self.meta_content = rel_path
 
