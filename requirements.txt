@@ -1,7 +1,9 @@
 Django==1.6.5
-#django-debug-toolbar==1.2.1
+django-debug-toolbar==1.2.1
 Pillow==2.5.1
-#django-coverage==1.2.4
+django-coverage==1.2.4
 git+https://github.com/kmike/django-coverage.git
 coverage==3.7.1
 selenium==2.42.1
+django-storages
+boto

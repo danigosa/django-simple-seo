@@ -3,7 +3,7 @@ from selenium.webdriver.firefox.webdriver import WebDriver as FirefoxDriver
 from django.test.testcases import LiveServerTestCase
 from simple_seo.models import TestMetadata
 
-from simple_seo.tags import TitleTag, MetaTag, KeywordsTag, BaseTag
+from simple_seo.tags import TitleTag, MetaTag, KeywordsTag, BaseTag, ImageMetaTag
 
 
 class TagPrintingTest(TestCase):
@@ -53,8 +53,8 @@ class FieldPrintingTest(LiveServerTestCase):
         setattr(self.mymetadata, 'twitter:url', MetaTag(meta_name='twitter:url'))
         setattr(self.mymetadata, 'og:type', MetaTag(meta_name='og:type', meta_content='type'))
         setattr(self.mymetadata, 'twitter:card', MetaTag(meta_name='twitter:card', meta_content='card'))
-        setattr(self.mymetadata, 'og:image', MetaTag(meta_name='og:image', meta_content='//infantiumweblog.s3.amazonaws.com/img/partners/animation2/base.png'))
-        setattr(self.mymetadata, 'twitter:image', MetaTag(meta_name='twitter:image'))
+        setattr(self.mymetadata, 'og:image', ImageMetaTag(meta_name='og:image', meta_content='img/partners/animation2/base.png'))
+        setattr(self.mymetadata, 'twitter:image', ImageMetaTag(meta_name='twitter:image'))
 
         self.mymetadata.save()
 
@@ -107,7 +107,7 @@ class FieldPrintingTest(LiveServerTestCase):
 
         og_image_element = self.firefox.find_element_by_xpath('/html/head/meta[@name=\'og:image\']')
         self.assertIsNotNone(og_image_element)
-        self.assertEqual(og_image_element.get_attribute('content'), '//infantiumweblog.s3.amazonaws.com/img/partners/animation2/base.png')
+        self.assertEqual(og_image_element.get_attribute('content'), '/static/img/partners/animation2/base.png')
         twitter_image_element = self.firefox.find_element_by_xpath('/html/head/meta[@name=\'twitter:image\']')
         self.assertIsNotNone(twitter_image_element)
         self.assertEqual(twitter_image_element.get_attribute('content'), og_image_element.get_attribute('content'))

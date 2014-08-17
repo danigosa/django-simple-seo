@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db.models.fields.files import FieldFile
 from django.utils.encoding import python_2_unicode_compatible
+from django.contrib.staticfiles.storage import staticfiles_storage
 
 
 @python_2_unicode_compatible
@@ -160,20 +161,21 @@ class ImageMetaTag(BaseMetatag):
         if 'value' in kwargs:
             if kwargs['value']:
                 if isinstance(kwargs['value'], InMemoryUploadedFile):
-                    rel_path = kwargs['path'] + kwargs['value'].name
                     self._inmemoryuploadedfile = kwargs['value']
+                    self.meta_content = kwargs['path'] + kwargs['value']._name
                 else:
                     self._inmemoryuploadedfile = None
-                    rel_path = kwargs['value']
-
-                if isinstance(rel_path, FieldFile):
-                    self.meta_content = rel_path.name
-                else:
-                    self.meta_content = rel_path
+                    # It's not an upload, just reading
+                    if isinstance(kwargs['value'], FieldFile):
+                        self.meta_content = kwargs['value'].name
+                    elif isinstance(kwargs['value'], ImageMetaTag):
+                        self.meta_content = kwargs['value'].meta_content
+                    else:
+                        self.meta_content = kwargs['value']
 
     @property
     def url(self):
-        return self.meta_content
+        return staticfiles_storage.url(self.meta_content)
 
     def __str__(self):
         if self.meta_content is None:
