@@ -28,6 +28,8 @@ LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
 USE_I18N = False
 
+ROOT_URLCONF = 'simple_seo.urls'
+
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
@@ -63,8 +65,6 @@ STATICFILES_FINDERS = (
 STATICFILES_DIRS = (
     PROJECT_PATH + '/media/',
 )
-
-ROOT_URLCONF = 'simple_seo.urls'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
@@ -118,17 +118,14 @@ LOGGING = {
 
 TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
 COVERAGE_BADGE_TYPE = 'drone.io'
-COVERAGE_CODE_EXCLUDES = [
-    'def __unicode__\(self\):',
-    'def get_absolute_url\(self\):',
-    'from .* import .*', 'import .*',
-    'simple_seo.admin',
-    'simple_seo.views',
-    'simple_seo.models',
-    'simple_seo.__pycache__',
-    'simple_seo.templatetags.__pycache__'
+
+COVERAGE_MODULE_EXCLUDES = [
+    'tests$', 'settings$', 'urls$', 'locale$', '__init__', 'django', 'migrations', 'templates',
+    'admin$', 'fixtures$', '__pycache__$'
 ]
+
 COVERAGE_REPORT_HTML_OUTPUT_DIR = 'tests_html'
+COVERAGE_USE_STDOUT = True
 
 # try:
 #     from local_settings import *

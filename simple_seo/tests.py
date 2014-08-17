@@ -53,6 +53,8 @@ class FieldPrintingTest(LiveServerTestCase):
         setattr(self.mymetadata, 'twitter:url', MetaTag(meta_name='twitter:url'))
         setattr(self.mymetadata, 'og:type', MetaTag(meta_name='og:type', meta_content='type'))
         setattr(self.mymetadata, 'twitter:card', MetaTag(meta_name='twitter:card', meta_content='card'))
+        setattr(self.mymetadata, 'og:image', MetaTag(meta_name='og:image', meta_content='//infantiumweblog.s3.amazonaws.com/img/partners/animation2/base.png'))
+        setattr(self.mymetadata, 'twitter:image', MetaTag(meta_name='twitter:image'))
 
         self.mymetadata.save()
 
@@ -102,3 +104,10 @@ class FieldPrintingTest(LiveServerTestCase):
         twitter_url_element = self.firefox.find_element_by_xpath('/html/head/meta[@name=\'twitter:url\']')
         self.assertIsNotNone(twitter_url_element)
         self.assertEqual(twitter_url_element.get_attribute('content'), og_url_element.get_attribute('content'))
+
+        og_image_element = self.firefox.find_element_by_xpath('/html/head/meta[@name=\'og:image\']')
+        self.assertIsNotNone(og_image_element)
+        self.assertEqual(og_image_element.get_attribute('content'), '//infantiumweblog.s3.amazonaws.com/img/partners/animation2/base.png')
+        twitter_image_element = self.firefox.find_element_by_xpath('/html/head/meta[@name=\'twitter:image\']')
+        self.assertIsNotNone(twitter_image_element)
+        self.assertEqual(twitter_image_element.get_attribute('content'), og_image_element.get_attribute('content'))
