@@ -349,8 +349,8 @@ Complete SEO model translated:
 After that, just run **./manage.py makemessages** and you're done. See django-vinaigrette for more details.
 
 
-10. Contribute!
----------------
+Contribute!
+-----------
 
 Then add to the root of the project your **local_settings.py** for everything your need, for instance adding debug toolbar local setting:
 
