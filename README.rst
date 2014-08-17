@@ -176,8 +176,8 @@ Add this lines to your admin.py:
     admin.site.register(MyMetadata, MyMetadataAdmin)
 
 
-5. Configure URLs for autodiscover
-----------------------------------
+5. Configure URLs for seo autodiscovering
+-----------------------------------------
 
 **WARNING:** It's a django related issue but once you call *admin.autodiscover()* the URLConf module remains corrupted forever, that means cannot dive into *urlpatterns*.
 
@@ -185,6 +185,13 @@ To solve that, try to add admin URL and do autodiscovering at the very end of yo
 
 .. code-block:: python
 
+    # Put all your URLconfig that should be managed by simple_seo BEFORE admin
+    urlpatterns = patterns(
+        '',
+        url(r'^test/', template_test, name='template_test'),
+    )
+
+    # Then add admin configuration AFTER your seo views
     admin.autodiscover()
 
     urlpatterns += patterns(
@@ -192,9 +199,10 @@ To solve that, try to add admin URL and do autodiscovering at the very end of yo
         url(r'^admin/', include(admin.site.urls)),
     )
 
+
 This will avoid *autodiscover* admin views, and also to see your actual views urlpatterns.
 
-5. Add metadata for your views
+6. Add metadata for your views
 ------------------------------
 
 Your views are autodiscovered for your convenience, create a metadata object for every view you want to administer
@@ -203,10 +211,10 @@ Your views are autodiscovered for your convenience, create a metadata object for
     :width: 100%
 
 
-6. Add metadata to your template
+7. Add metadata to your template
 --------------------------------
 
-Just include this template tag in your **<head>** section:
+Just include this template tag in your **<head>** section, no more template code needed, can be on the root *base.html* template and it will autodetect the view and inject appropriate metadata for each.
 
 .. code-block:: html
 
@@ -245,6 +253,26 @@ Just override **og_image** attribute. You can find all base models in **simple_s
 
     # Register SEO Model
     register(MyMetadata)
+
+*"I only want Facebook tags, and I prefer to add all fields by hand, no handy population, like a boss"*
+
+.. code-block:: python
+
+    from simple_seo.fields import URLMetaTagField, MetaTagField
+    from simple_seo.models import OpenGraphMetadata
+    from simple_seo import register
+
+
+    class MyOpenGraphMetadata(OpenGraphMetadata):
+        """
+        My OpenGraph Model
+        """
+        og_title = MetaTagField(name="og:title", populate_from=None)  # Overrides default og:title field
+        og_description = MetaTagField(name="og:description", populate_from=None)  # Overrides default og:description field
+
+    # Register SEO Model
+    register(MyMetadata)
+
 
 8. Cache Settings
 -----------------

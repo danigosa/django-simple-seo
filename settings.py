@@ -130,7 +130,7 @@ COVERAGE_CODE_EXCLUDES = [
 ]
 COVERAGE_REPORT_HTML_OUTPUT_DIR = 'tests_html'
 
-try:
-    from local_settings import *
-except ImportError:
-    pass
+# try:
+#     from local_settings import *
+# except ImportError:
+#     pass
