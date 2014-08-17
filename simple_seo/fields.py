@@ -167,10 +167,11 @@ class URLMetaTagField(with_metaclass(models.SubfieldBase, BaseURLTagField)):
         Patch clean to permit having URLFields with blank=true
         """
         try:
-            super(URLMetaTagField, self).clean(value, model_instance)
+            return super(URLMetaTagField, self).clean(value, model_instance)
         except ValidationError as ex:
             if not self.blank:
                 raise ex
+        return value
 
     def to_python(self, value):
         if isinstance(value, MetaTag):
