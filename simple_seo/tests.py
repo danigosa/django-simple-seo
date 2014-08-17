@@ -107,7 +107,7 @@ class FieldPrintingTest(LiveServerTestCase):
 
         og_image_element = self.firefox.find_element_by_xpath('/html/head/meta[@name=\'og:image\']')
         self.assertIsNotNone(og_image_element)
-        self.assertEqual(og_image_element.get_attribute('content'), 'img/partners/animation2/base.png')
+        self.assertEqual(og_image_element.get_attribute('content'), '/static/img/partners/animation2/base.png')
         twitter_image_element = self.firefox.find_element_by_xpath('/html/head/meta[@name=\'twitter:image\']')
         self.assertIsNotNone(twitter_image_element)
         self.assertEqual(twitter_image_element.get_attribute('content'), og_image_element.get_attribute('content'))
