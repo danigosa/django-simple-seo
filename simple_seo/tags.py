@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db.models.fields.files import FieldFile
 from django.utils.encoding import python_2_unicode_compatible
-from django.contrib.staticfiles.storage import staticfiles_storage
 
 
 @python_2_unicode_compatible
@@ -166,16 +165,11 @@ class ImageMetaTag(BaseMetatag):
                 else:
                     self._inmemoryuploadedfile = None
                     rel_path = kwargs['value']
-                if staticfiles_storage:
-                    if isinstance(rel_path, FieldFile):
-                        self.meta_content = staticfiles_storage.url(rel_path.name)
-                    else:
-                        self.meta_content = rel_path
+
+                if isinstance(rel_path, FieldFile):
+                    self.meta_content = rel_path.name
                 else:
-                    if isinstance(rel_path, FieldFile):
-                        self.meta_content = rel_path.name
-                    else:
-                        self.meta_content = rel_path
+                    self.meta_content = rel_path
 
     @property
     def url(self):
