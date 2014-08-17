@@ -52,10 +52,10 @@ class BaseMetadata(models.Model):
     Abstract Base Metadata Class
     """
     view_name = models.CharField(max_length=250, null=False, blank=False, choices=(), unique=True, db_index=True)
-    title = TitleTagField()
-    keywords = KeywordsTagField()
-    description = MetaTagField()
-    author = MetaTagField(null=True, blank=True)
+    title = TitleTagField(null=False, blank=False)
+    keywords = KeywordsTagField(null=False, blank=False)
+    description = MetaTagField(null=False, blank=False)
+    author = MetaTagField(null=False, blank=False)
 
     def __init__(self, *args, **kwargs):
         super(BaseMetadata, self).__init__(*args, **kwargs)
