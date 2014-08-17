@@ -129,13 +129,9 @@ def load_view_names(urlconf=None):
     if not urlconf:
         try:
             urlconf = __import__(settings.ROOT_URLCONF, {}, {}, [''])
-        except AttributeError as ae:
-            log.debug('Skipping import, too early for these settings yet')
-        except ImportError as ie:
+        except Exception as ie:
             raise ImproperlyConfigured("Error occurred while trying to load %s: %s"
-                                       % (getattr(settings, 'ROOT_URLCONF', 'No settings.ROOT_URLCONF found'), str(ie)))
-    if not urlconf:
-        return ()
+                                       % (getattr(settings, 'ROOT_URLCONF', '\'NO settings.ROOT_URLCONF found\''), str(ie)))
 
     views = []
     for p in urlconf.urlpatterns:
