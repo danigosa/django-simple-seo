@@ -24,7 +24,7 @@ WARNING
 
 This docs refers to version 1.0 or newer. For older versions (<=0.4.1) refer to:
 
- * XXXX
+ * https://github.com/danigosa/django-simple-seo/blob/master/README-OLD.rst
 
 
 What's in django-simple-seo
