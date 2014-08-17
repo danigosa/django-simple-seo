@@ -2,15 +2,6 @@
 Simple Seo Backend for Django (WARNING only version < 1.0, for versions >=1.0 please see README.rst)
 ====================================================================================================
 
-.. image:: https://drone.io/github.com/danigosa/django-simple-seo/status.png
-   :target: https://drone.io/github.com/danigosa/django-simple-seo/latest
-
-.. image:: https://img.shields.io/pypi/v/django-simple-seo.svg?style=flat
-    :target: https://pypi.python.org/pypi/django-simple-seo
-
-.. image:: https://img.shields.io/pypi/dm/django-simple-seo.svg?style=flat
-    :target: https://pypi.python.org/pypi/django-simple-seo
-
 Simple seo backend for Django. Inspired by django-seo ( https://github.com/willhardy/django-seo ) but found it quite
 complex for the simple functionality it was intended for.
 
