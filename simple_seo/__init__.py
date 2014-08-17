@@ -141,7 +141,7 @@ def load_view_names(urlconf=None):
             _load_patterns(views, p.url_patterns, getattr(p, 'namespace', None))
         else:
             pass
-    _view_names_registry.append(views)
+    _view_names_registry.extend(views)
     return _view_names_registry
 
 
