@@ -127,7 +127,7 @@ COVERAGE_MODULE_EXCLUDES = [
 COVERAGE_REPORT_HTML_OUTPUT_DIR = 'tests_html'
 COVERAGE_USE_STDOUT = True
 
-# try:
-#     from local_settings import *
-# except ImportError:
-#     pass
+try:
+    from local_settings import *
+except ImportError:
+    pass
