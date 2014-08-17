@@ -10,7 +10,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-simple-seo',
-    version='0.4.1',
+    version='1.0.0',
     packages=['simple_seo', 'simple_seo.templatetags'],
     include_package_data=True,
     license='MIT License',  # example license
@@ -23,7 +23,7 @@ setup(
 
     ],
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Operating System :: OS Independent",
         "Environment :: Web Environment",
         "Framework :: Django",

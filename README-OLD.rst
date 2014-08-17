@@ -1,6 +1,6 @@
-=============================
-Simple Seo Backend for Django
-=============================
+====================================================================================================
+Simple Seo Backend for Django (WARNING only version < 1.0, for versions >=1.0 please see README.rst)
+====================================================================================================
 
 .. image:: https://drone.io/github.com/danigosa/django-simple-seo/status.png
    :target: https://drone.io/github.com/danigosa/django-simple-seo/latest
@@ -21,17 +21,13 @@ What's in django-simple-seo
 
  * Python 2.7, 3.2, 3.3, 3.4 and Django 1.4, 1.5 and 1.6
  * View Autodiscovering
- * Registry of models and views in settings
  * Pure Django Models and Django Fields implementation, no metaclasses in action
  * Don't reinvent the wheel: as long as they are django models you can use the goodies out there
  * i18n with django-vinaigrette, django-linguo, django-modeltranslation, etc.
- * Cache can be activated internally to cache raw HTML, but can also be used with johnny-cache, django-cache-machine, etc.
- * Single database query onto a single database table (if you have one model, no several backends)
- * Support for 'populate_from' attribute (copy values on saving in similar tags)
- * Support for UrlFields and ImageFields in admin
- * Support for django-storages for S3 (and possibly other backends) storage, directly from admin
+ * Cache can be activated internally, but can also be used with johnny-cache, django-cache-machine, etc.
  * Easily extendible as far as it's all about simple django models and fields
  * Out-of-the-box models for OpenGraph Facebook and Twitter tags
+ * Support for UrlFields and ImageFields in admin
  * Includes Selenium tests for proper HTML generation
  * Test app included (.testapp)
 
@@ -40,7 +36,7 @@ What's in django-simple-seo
 What's NOT in django-simple-seo
 *******************************
 
- * Only implements view based backend. Maybe in future releases it will include Model and Path backend like in DjangoSeo.
+ * Only implements view based backend. Maybe in future releases it will include Model and Path backend like in DjangoSeo. The attribute 'populate_from' is neither implemented yet.
 
 Installation
 ------------
@@ -73,24 +69,26 @@ Requeriments
  * staticfiles
  * south (optional, if migrations)
  * admin (this includes auth, sessions and contenttypes)
- * django-modeltranslation, django-linguo, django-vinaigrette (**optional**, for i18n)
- * django-storages (**optional**, for cloud storage)
  
 
 1. Create your SEO Model
 ------------------------
 
-Create a model subclassing the classes BaseMetada(title, author, description, keywords), OpenGraphMetada(includes facebook tags) or AllMetadata(Facebook and Twitter).
+Create a model subclassing the classes BaseMetada(title, author, description, keywords), OpenGraphMetada(includes facebook tags) or AllMetadata(Facebook and Twitter). You must use **register** to register the model.
 
 .. code-block:: python
 
     from simple_seo.models import AllMetadata
+    from simple_seo import register
 
 
     class MyMetadata(AllMetadata):
         """
         My Seo Model
         """
+
+    # Register SEO Model
+    register(MyMetadata)
 
 
 2. Synchronize your DB
@@ -102,63 +100,7 @@ Synchronize your database with **syncdb**, then your model with **migrate** if y
 
     $ ./manage.py syncdb
 
-Or in case of using South:
-
-.. code-block:: sh
-
-    $ ./manage.py schemamigration your_app --auto
-    $ ./manage.py migrate your_app
-
-
-3. Register your model for view managment
------------------------------------------
-
-Use Django model notation for describing your seo models and the views related to be managed.
-
-The simplest usage is to have just one seo model that manages all views. Do it like this in your **settings.py**:
-
-.. code-block:: python
-
-    SEO_MODEL_REGISTRY = (
-        ('testapp.MyMetadata', 'ALL'),
-    )
-
-In case you need several seo models a restrict them to certain views, add the following:
-
-.. code-block:: python
-
-    SEO_MODEL_REGISTRY = (
-        ('simple_seo.TestMetadata', ('template_test', )),
-    )
-
-Please note that simple_seo registry will load views by order and store the in a dictionary. That means:
-
-  * Collisions in model definitions will result in last definition to be *always selected*
-  * Defining just one 'ALL' registry will override the rest if it's declared *before* in the tuple
-
-Examples of bad configurations:
-
-.. code-block:: python
-
-    SEO_MODEL_REGISTRY = (
-        ('testapp.MyMetadata', 'ALL'),
-        ('simple_seo.TestMetadata', ('template_test', )),
-    )
-**PROBLEM**: 'simple_seo.TestMetadata' model won't ever be reached. 'template_test' view will be processed with 'testapp.MyMetadata'
-
-.. code-block:: python
-
-    SEO_MODEL_REGISTRY = (
-        ('testapp.MyMetadata', ('template_test', )),
-        # ... More and More definitions
-        ('testapp.MyMetadata', ('template_test2', 'template_test3')),
-    )
-**PROBLEM**: 'template_test' view will never be processed as last registry overrides first.
-
-There's no plans to make registry very exotic on this, just following very simple rules it can be as complex as you want, covering vast use cases.
-
-
-4. Register your model for administration
+3. Register your model for administration
 -----------------------------------------
 
 Add this lines to your admin.py:
@@ -176,7 +118,7 @@ Add this lines to your admin.py:
     admin.site.register(MyMetadata, MyMetadataAdmin)
 
 
-5. Configure URLs for autodiscover
+4. Configure URLs for autodiscover
 ----------------------------------
 
 **WARNING:** It's a django related issue but once you call *admin.autodiscover()* the URLConf module remains corrupted forever, that means cannot dive into *urlpatterns*.
@@ -329,17 +271,6 @@ You can find more info of how to develop with remote vagrant servers and the awe
 
 Changelog
 =========
-
-**version 1.0.0**
-
- * Lots of bugfixing
- * Support for 'populate_from' feature. By default og:title, og:description will populate from title and description. Twitter url, title, image and description will populate from Facebook's
- * Now support for django-modeltranslation and django-linguo (preffixing with '_lang' database fields)
- * Support for django-storages with S3 or other cloud services (tested on S3 only)
- * URLFields don't fail on validation (django defaults patched)
- * Cache working (memcached and django-redis tested)
- * Increased tests for population deep testing (Firefox Selenium testing)
- * New registry by settings, giving control to the developer in a single point (it's backwards incompatible!)
 
 **version 0.4.1**
 

@@ -1,11 +1,18 @@
-from django.core.exceptions import ImproperlyConfigured
+from __future__ import print_function
 from django.db.models.loading import get_model
 from django.utils.six import iteritems
+from django.core.exceptions import ImproperlyConfigured
+from django.core.urlresolvers import RegexURLResolver, RegexURLPattern
+import logging
+from django.conf import settings
+
+log = logging.getLogger(__name__)
 
 from settings import SEO_MODEL_REGISTRY
 
-
+#  Global registries
 _simple_seo_registry = []
+_view_names_registry = []
 
 
 def _register(model_name, views_related):
@@ -13,8 +20,8 @@ def _register(model_name, views_related):
     Registers model for the given views. If no views given then all views are bound.
     If more than one seo model is registered, order matter (in case view name is defined in more than one model,
     first registered is applied only
-    :param model: Model to register
-    :param views: list of str
+    :param model_name: Model to register
+    :param views_related: list of str
     :return:
     """
     if views_related and isinstance(views_related, str):
@@ -71,3 +78,71 @@ except (IndexError, TypeError, ImportError):
     raise ImproperlyConfigured(
         "SEO_MODEL_REGISTRY setting has bad format. Look at the documentation here http://bit.ly/1pmE8vU"
     )
+
+
+def _load_pattern(views, pattern, namespace=None):
+    """
+    Computes RegexURLPattern
+    :param pattern: RegexURLPattern
+    :param namespace: str
+    :return: tuple
+    """
+    name = getattr(pattern, 'name', None)
+    if name:
+        if namespace:
+            views.append((namespace + ':' + name, namespace + ':' + name))
+        else:
+            views.append((name, name))
+
+
+def _load_patterns(views, patterns, namespace=None):
+    """
+    Computes RegexURLResolver
+    :param views: list
+    :param patterns: RegexURLResolver
+    :param namespace: str
+    :return:
+    """
+    for pattern in patterns:
+        if isinstance(pattern, RegexURLPattern):
+            _load_pattern(views, pattern, namespace)
+        elif isinstance(pattern, RegexURLResolver):
+            if namespace and hasattr(pattern, 'namespace') and getattr(pattern, 'namespace'):
+                namespace += ':' + pattern.namespace
+            elif hasattr(pattern, 'namespace') and getattr(pattern, 'namespace'):
+                namespace = pattern.namespace
+            _load_patterns(views, pattern.url_patterns, namespace)
+        else:
+            pass
+
+
+def load_view_names(urlconf=None):
+    """
+    Loads view names
+    Warning: Only named views are loaded
+    :return: generator
+    """
+    global _view_names_registry
+    if len(_view_names_registry):
+        return _view_names_registry
+
+    if not urlconf:
+        try:
+            urlconf = __import__(settings.ROOT_URLCONF, {}, {}, [''])
+        except Exception as e:
+            raise ImproperlyConfigured("Error occurred while trying to load %s: %s"
+                                       % (settings.ROOT_URLCONF, str(e)))
+    views = []
+    for p in urlconf.urlpatterns:
+        if isinstance(p, RegexURLPattern):
+            _load_pattern(views, p)
+        elif isinstance(p, RegexURLResolver):
+            _load_patterns(views, p.url_patterns, getattr(p, 'namespace', None))
+        else:
+            pass
+    _view_names_registry.append(views)
+    return _view_names_registry
+
+
+
+

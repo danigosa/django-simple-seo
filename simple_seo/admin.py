@@ -2,7 +2,7 @@ from __future__ import print_function
 from django.contrib.admin import ModelAdmin
 from django import forms
 
-from simple_seo.utils import load_view_names
+from .import load_view_names
 
 
 class BaseMetadataForm(forms.ModelForm):

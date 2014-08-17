@@ -12,6 +12,28 @@ version 0.3.2
 
  * Bugfixes in __str__ and __len__ when fields have NULL value in database
 
+version 1.0.0
+-------------
+
+ * Lots of bugfixes (now fully working on production systems)
+ * Support for 'populate_from' feature. By default og:title, og:description will populate from title and description. Twitter url, title, image and description will populate from Facebook's
+ * Now support for django-modeltranslation and django-linguo (preffixing with '_lang' database fields)
+ * Support for django-storages with S3 or other cloud services (tested on S3 only)
+ * URLFields don't fail on validation (django defaults patched)
+ * Cache working (memcached and django-redis tested)
+ * Increased tests for population deep testing (Firefox Selenium testing)
+ * New registry by settings, giving control to the developer in a single point (it's backwards incompatible!)
+
+version 0.4.1
+-------------
+
+ * Refactors and bugfixings
+ * Support for modeltranslation and linguo i18n backends
+
+version 0.3.2
+-------------
+
+ * Bugfixes in __str__ and __len__ when fields have NULL value in database
 
 version 0.3.0
 -------------
