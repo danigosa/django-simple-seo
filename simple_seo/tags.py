@@ -180,7 +180,7 @@ class ImageMetaTag(BaseMetatag):
     def __str__(self):
         if self.meta_content is None:
             return ''
-        return self.meta_content
+        return staticfiles_storage.url(self.meta_content)
 
 
 class KeywordsTag(BaseMetatag):

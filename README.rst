@@ -371,7 +371,7 @@ You can find more info of how to develop with remote vagrant servers and the awe
 Changelog
 =========
 
-**version 1.0.0**
+**version 1.0**
 
  * Lots of bugfixing
  * Support for 'populate_from' feature. By default og:title, og:description will populate from title and description. Twitter url, title, image and description will populate from Facebook's
