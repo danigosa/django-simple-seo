@@ -48,6 +48,8 @@ What's in django-simple-seo
 
  .. image:: assets/simple_seo_admin.png
 
+ .. image:: assets/simple_seo_admin1.png
+
 What's NOT in django-simple-seo
 *******************************
 
