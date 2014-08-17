@@ -177,6 +177,14 @@ class ImageMetaTag(BaseMetatag):
     def url(self):
         return staticfiles_storage.url(self.meta_content)
 
+    def print_tag(self):
+        """
+        Builds tag as text for printing
+        :return: text
+        """
+        if self.meta_name and self.meta_content:
+            return "<%s name=\"%s\" content=\"%s\" />" % (self.tag_name, self.meta_name, self.url)
+
     def __str__(self):
         if self.meta_content is None:
             return ''
