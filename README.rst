@@ -19,13 +19,6 @@ complex for the simple functionality it was intended for.
 
 django-simple-seo aims to attach a model to your views with just 4 simple lines of code and everything configured by the admin.
 
-WARNING
--------
-
-This docs refers to version 1.0 or newer. For older versions (<=0.4.1) refer to:
-
- * https://github.com/danigosa/django-simple-seo/blob/master/README-OLD.rst
-
 
 What's in django-simple-seo
 ***************************
