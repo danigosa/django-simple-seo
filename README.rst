@@ -22,7 +22,9 @@ django-simple-seo aims to attach a model to your views with just 4 simple lines 
 WARNING
 -------
 
-This docs refers to version 1.0 or newer. For older versions (<=0.4.1) refer to https://github.com/danigosa/django-simple-seo/blob/master/README-OLD.rst
+This docs refers to version 1.0 or newer. For older versions (<=0.4.1) refer to:
+
+ * https://github.com/danigosa/django-simple-seo/blob/master/README-OLD.rst
 
 
 What's in django-simple-seo
