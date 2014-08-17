@@ -4,11 +4,11 @@ from django.utils.six import iteritems
 from django.core.exceptions import ImproperlyConfigured
 from django.core.urlresolvers import RegexURLResolver, RegexURLPattern
 import logging
-from django.conf import settings
+from django.conf import settings as django_settings
 
 log = logging.getLogger(__name__)
 
-from settings import SEO_MODEL_REGISTRY
+from .settings import SEO_MODEL_REGISTRY
 
 #  Global registries
 _simple_seo_registry = []
@@ -128,7 +128,7 @@ def load_view_names(urlconf=None):
 
     if not urlconf:
         try:
-            urlconf = __import__(settings.ROOT_URLCONF, {}, {}, [''])
+            urlconf = __import__(django_settings.ROOT_URLCONF, {}, {}, [''])
         except Exception as ie:
             raise ImproperlyConfigured("Error occurred while trying to load %s: %s"
                                        % (getattr(settings, 'ROOT_URLCONF', '\'NO settings.ROOT_URLCONF found\''), str(ie)))
