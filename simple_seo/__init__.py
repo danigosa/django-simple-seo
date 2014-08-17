@@ -131,7 +131,7 @@ def load_view_names(urlconf=None):
             urlconf = __import__(settings.ROOT_URLCONF, {}, {}, [''])
         except Exception as e:
             raise ImproperlyConfigured("Error occurred while trying to load %s: %s"
-                                       % (settings.ROOT_URLCONF, str(e)))
+                                       % (getattr(settings, 'ROOT_URLCONF', 'No settings.ROOT_URLCONF found'), str(e)))
     views = []
     for p in urlconf.urlpatterns:
         if isinstance(p, RegexURLPattern):
