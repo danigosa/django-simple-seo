@@ -116,18 +116,18 @@ LOGGING = {
     }
 }
 
-# TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
-# COVERAGE_BADGE_TYPE = 'drone.io'
-#
-# COVERAGE_MODULE_EXCLUDES = [
-#     'tests$', 'settings$', 'urls$', 'locale$', '__init__', 'django', 'migrations', 'templates',
-#     'admin$', 'fixtures$', '__pycache__$'
-# ]
-#
-# COVERAGE_REPORT_HTML_OUTPUT_DIR = 'tests_html'
-# COVERAGE_USE_STDOUT = True
+TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
+COVERAGE_BADGE_TYPE = 'drone.io'
 
-try:
-    from local_settings import *
-except ImportError:
-    pass
+COVERAGE_MODULE_EXCLUDES = [
+    'tests$', 'settings$', 'urls$', 'locale$', '__init__', 'django', 'migrations', 'templates',
+    'admin$', 'fixtures$', '__pycache__$'
+]
+
+COVERAGE_REPORT_HTML_OUTPUT_DIR = 'tests_html'
+COVERAGE_USE_STDOUT = True
+
+# try:
+#     from local_settings import *
+# except ImportError:
+#     pass
