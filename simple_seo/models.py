@@ -101,7 +101,8 @@ class AllMetadata(OpenGraphMetadata):
     """
     twitter_title = MetaTagField(name='twitter:title', max_length=70, null=True, blank=True, populate_from='og:title')
     twitter_card = MetaTagField(name='twitter:card', max_length=15, null=True, blank=True)
-    twitter_image = ImageMetaTagField(name='twitter:image', upload_to='seo/images/', null=True, blank=True)
+    twitter_image = ImageMetaTagField(name='twitter:image', upload_to='seo/images/', null=True, blank=True,
+                                      populate_from='og:image')
     twitter_url = URLMetaTagField(name='twitter:url', null=True, blank=True, populate_from='og:url')
     twitter_description = MetaTagField(name='twitter:description', max_length=200, null=True, blank=True,
                                        populate_from='og:description')
