@@ -187,11 +187,11 @@ class ImageMetaTagField(with_metaclass(models.SubfieldBase, BaseImageTagField)):
     """
     description = "Field for Storing <meta /> tag"
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, populate_from=None, *args, **kwargs):
         kwargs['blank'] = True
         kwargs['db_index'] = False
         kwargs['null'] = True
-        super(ImageMetaTagField, self).__init__(*args, **kwargs)
+        super(ImageMetaTagField, self).__init__(populate_from=None, *args, **kwargs)
 
     def to_python(self, value):
         if isinstance(value, ImageMetaTag):
