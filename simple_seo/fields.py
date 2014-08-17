@@ -77,6 +77,11 @@ class BaseImageTagField(with_metaclass(models.SubfieldBase, models.ImageField)):
     description = "A hand of cards (bridge style)"
     populate_from = None  # Field to populate values from
 
+    def __init__(self, populate_from=None, *args, **kwargs):
+        super(BaseImageTagField, self).__init__(*args, **kwargs)
+        if populate_from:
+            self.populate_from = populate_from
+
     def get_prep_value(self, value):
         prep_value = self.to_python(value)
         if prep_value.self_closed:
@@ -191,7 +196,7 @@ class ImageMetaTagField(with_metaclass(models.SubfieldBase, BaseImageTagField)):
         kwargs['blank'] = True
         kwargs['db_index'] = False
         kwargs['null'] = True
-        super(ImageMetaTagField, self).__init__(populate_from=None, *args, **kwargs)
+        super(ImageMetaTagField, self).__init__(populate_from=populate_from, *args, **kwargs)
 
     def to_python(self, value):
         if isinstance(value, ImageMetaTag):
