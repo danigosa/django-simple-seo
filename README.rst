@@ -36,11 +36,11 @@ What's in django-simple-seo
  * Pure Django Models and Django Fields implementation, no metaclasses in action
  * Don't reinvent the wheel: as long as they are django models you can use the goodies out there
  * i18n with django-vinaigrette, django-linguo, django-modeltranslation, etc.
- * Cache can be activated internally to cache raw HTML, but can also be used with johnny-cache, django-cache-machine, etc.
- * Single database query onto a single database table (if you have one model, no several backends)
+ * Cache can be activated internally to cache raw HTML, but can also be used with johnny-cache, django-cache-machine, etc. for model level caching
+ * Single database query onto a single database table (if you have one model, no several seo backends)
  * Support for 'populate_from' attribute (copy values on saving in similar tags)
- * Support for UrlFields and ImageFields in admin
- * Support for django-storages for S3 (and possibly other backends) storage, directly from admin
+ * Support for UrlFields and ImageFields in admin (can be override to simple char fields)
+ * Support for django-storages for S3 storage(and possibly other backends, but not tested), directly from admin
  * Easily extendible as far as it's all about simple django models and fields
  * Out-of-the-box models for OpenGraph Facebook and Twitter tags
  * Includes Selenium tests for proper HTML generation
@@ -53,7 +53,7 @@ What's in django-simple-seo
 What's NOT in django-simple-seo
 *******************************
 
- * Only implements view based backend. Maybe in future releases it will include Model and Path backend like in DjangoSeo.
+ * Only implements view based backend. Maybe in future releases it will include Model and Path backend like in DjangoSeo. Contribute!
 
 Installation
 ------------
@@ -136,7 +136,7 @@ The simplest usage is to have just one seo model that manages all views. Do it l
         ('testapp.MyMetadata', 'ALL'),
     )
 
-In case you need several seo models a restrict them to certain views, add the following:
+In case you need several seo models and restrict them to certain views, add the following:
 
 .. code-block:: python
 
@@ -144,10 +144,10 @@ In case you need several seo models a restrict them to certain views, add the fo
         ('simple_seo.TestMetadata', ('template_test', )),
     )
 
-Please note that simple_seo registry will load views by order and store the in a dictionary. That means:
+Please note that simple_seo registry will load views by order and store them in a dictionary. That means:
 
-  * Collisions in model definitions will result in last definition to be *always selected*
-  * Defining just one 'ALL' registry will override the rest if it's declared *before* in the tuple
+  * Collisions in model definitions will result in first definition to be *always selected*
+  * Defining just one 'ALL' registry will override the rest if it's declared *after* 
 
 Examples of bad configurations:
 
@@ -213,7 +213,7 @@ To solve that, try to add admin URL and do autodiscovering at the very end of yo
     )
 
 
-This will avoid *autodiscover* admin views, and also to see your actual views urlpatterns.
+This configuration will also avoid *autodiscover* admin views to be added to views dropdown in the admin.
 
 6. Add metadata for your views
 ------------------------------
