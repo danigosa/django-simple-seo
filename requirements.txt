@@ -1,4 +1,4 @@
-Django==1.6.5
+Django==2.2.24
 django-debug-toolbar==1.2.1
 Pillow==2.5.1
 django-coverage==1.2.4
